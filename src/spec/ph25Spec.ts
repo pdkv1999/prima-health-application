@@ -488,7 +488,7 @@ html: `
   .re { margin-top:16px; }
   .bold { font-weight:700; }
   .hr { border:0; border-top:2px solid #111; margin:20px 0; }
-  .two-col { display:grid; grid-template-columns: 1fr 1fr; gap:24px; }
+  .two-col { display:grid; gap:24px; }
   h2 { font-size:18px; margin:18px 0 8px; font-weight:700; }
   ol { padding-left:1.25rem; }
   table { width:100%; border-collapse:collapse; }
@@ -498,7 +498,7 @@ html: `
 </style>
 <div class="page">
   <header class="letterhead">
-    <img src="/lovable-uploads/7d76cd81-c766-43ee-aa30-c664357d974a.png" alt="PrimaHealth logo" style="max-height:48px; height:auto; width:auto; object-fit:contain; display:block;" />
+    <img src="/lovable-uploads/7d76cd81-c766-43ee-aa30-c664357d974a.png" alt="PrimaHealth logo" style="max-height:100px; height:auto; width:auto; object-fit:contain; display:block;" />
     <div class="contact">
       2.30 Western Gateway Building<br/>
       University College Cork<br/>
@@ -562,7 +562,9 @@ html: `
 
       <h2>Pregnancy and Developmental Milestones</h2>
       <div class="addr">{{report.antenatalDetails}} {{report.deliveryDetails}} {{report.postpartumDetails}} {{report.developmentalMilestones}}</div>
+    </section>
 
+    <aside>
       <h2>Conners - 4 Report</h2>
       <table>
         <tr>
