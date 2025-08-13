@@ -562,9 +562,7 @@ html: `
 
       <h2>Pregnancy and Developmental Milestones</h2>
       <div class="addr">{{report.antenatalDetails}} {{report.deliveryDetails}} {{report.postpartumDetails}} {{report.developmentalMilestones}}</div>
-    </section>
 
-    <aside>
       <h2>Conners - 4 Report</h2>
       <table>
         <tr>
@@ -596,7 +594,9 @@ html: `
         </tr>
       </table>
       <div class="note">Note. ADHD-I = Inattention symptoms; ADHD-II = hyperactivity/impulsivity symptoms; ODD = oppositional defiant disorder symptoms; CD = conduct disorder symptoms.</div>
-    </aside>
+    </section>
+
+    <aside></aside>
   </div>
 
   <h2>Clinical Assessment and Reported History</h2>
