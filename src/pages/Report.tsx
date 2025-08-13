@@ -58,27 +58,48 @@ export default function Report() {
 
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Final Report – Under 12s</h1>
+    <div className="apple-bg min-h-screen">
+      <div className="max-w-5xl mx-auto p-6 space-y-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-light tracking-tight text-slate-800 mb-2">Final Report – Under 12s</h1>
+          <p className="text-slate-600 font-light">PrimaHealth ADHD Assessment (PH25)</p>
+        </div>
 
-      <div
-        id="reportContent"
-        ref={reportRef}
-        className="rounded-xl border bg-card p-6 shadow"
-      >
-        <article className="prose max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />
-        </article>
+        <div
+          id="reportContent"
+          ref={reportRef}
+          className="report-glass p-8"
+        >
+          <article className="prose prose-slate max-w-none">
+            <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />
+          </article>
+        </div>
+
+        {/* Action buttons */}
+        <div className="flex flex-wrap justify-center gap-4 print:hidden">
+          <Button 
+            variant="secondary" 
+            onClick={previewReport}
+            className="glass-button text-slate-700 font-medium px-6 py-3"
+          >
+            👁️ Preview Report
+          </Button>
+          <Button 
+            variant="secondary" 
+            onClick={printReport}
+            className="glass-button text-slate-700 font-medium px-6 py-3"
+          >
+            🖨️ Print to PDF
+          </Button>
+          <Button 
+            variant="secondary" 
+            onClick={sendEmail}
+            className="glass-button text-slate-700 font-medium px-6 py-3"
+          >
+            📧 Send Encrypted Email to G1
+          </Button>
+        </div>
       </div>
-
-      {/* Action buttons */}
-      <div className="button-container flex flex-wrap gap-3 print:hidden">
-        
-        <Button variant="secondary" onClick={previewReport}>👁️ Preview Report</Button>
-        <Button variant="secondary" onClick={printReport}>🖨️ Print to PDF</Button>
-        <Button variant="secondary" onClick={sendEmail}>📧 Send Encrypted Email to G1</Button>
-      </div>
-
 
       {/* Email dialog */}
       <Dialog open={open} onOpenChange={setOpen}>

@@ -126,6 +126,64 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 
+  /* Apple-style glassy report container */
+  .report-glass {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.8) 100%);
+    backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 
+      0 24px 64px rgba(0, 0, 0, 0.12),
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .report-glass:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+      0 32px 80px rgba(0, 0, 0, 0.16),
+      0 12px 40px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Apple-style button enhancements */
+  .glass-button {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.1) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .glass-button:hover {
+    background: linear-gradient(135deg, 
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.2) 100%);
+    transform: translateY(-1px);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  /* Apple-style page background */
+  .apple-bg {
+    background: linear-gradient(135deg, 
+      #f8fafc 0%,
+      #f1f5f9 50%,
+      #e2e8f0 100%);
+    min-height: 100vh;
+  }
+
   .form-section {
     @apply grid gap-5 mb-5;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
