@@ -20,7 +20,7 @@ function toISO(d: string) {
 
 export function getMayaSeed(currentReport?: any): MayaSeed {
   const meta = {
-    refNumber: "D-0001",
+    refNumber: "0001",
     gpName: "Dr. ABC",
     gpAddress:
       "Esculap Medical Centre,\nBallincollig Primary Care Centre,\n55 Old Fort Road,\nBallincollig,\nCork, P31 XN96",

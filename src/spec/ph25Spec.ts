@@ -56,7 +56,7 @@ export const ph25Spec = {
         {
           title: "Present at Assessment",
           fields: [
-            { key: "present", label: "Present", type: "checkboxes", options: ["both", "mother", "father", "other"] },
+            { key: "present", label: "Present", type: "checkboxes", options: ["mother", "father","both", "other"] },
             { key: "presentOther", label: "Specify if Other", type: "text" },
           ],
         },
