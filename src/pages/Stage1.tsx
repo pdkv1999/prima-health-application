@@ -78,31 +78,36 @@ export default function Stage1() {
   }, []);
 
   return (
-    <div className="grid gap-6">
-      <h1 className="text-xl font-semibold">{ph25Spec.stages.stage1.title}</h1>
+    <div className="max-w-4xl mx-auto my-5">
+      <div className="form-container">
+        <h1 className="text-center text-foreground mb-5 text-2xl font-medium">{ph25Spec.stages.stage1.title}</h1>
+      </div>
       
       <FormRenderer stageKey="stage1" sections={ph25Spec.stages.stage1.sections as any} />
-      <div className="flex flex-wrap gap-3 pt-2">
-        <Button onClick={() => toast({ description: "Saved" })}>Save</Button>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            const res = validateRequired();
-            if (!res.ok) {
-              toast({
-                title: "Missing required fields",
-                description: res.missing.join(", "),
-              });
-              return;
-            }
-            navigate("/stage2");
-          }}
-        >
-          Next Stage
-        </Button>
-        <Button variant="outline" onClick={doExport}>Export JSON</Button>
-        <Button variant="outline" onClick={doImport}>Import JSON</Button>
-        <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={onFile} />
+      
+      <div className="form-container mt-5">
+        <div className="flex flex-wrap gap-3 pt-2">
+          <Button onClick={() => toast({ description: "Saved" })}>Save</Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              const res = validateRequired();
+              if (!res.ok) {
+                toast({
+                  title: "Missing required fields",
+                  description: res.missing.join(", "),
+                });
+                return;
+              }
+              navigate("/stage2");
+            }}
+          >
+            Next Stage
+          </Button>
+          <Button variant="outline" onClick={doExport}>Export JSON</Button>
+          <Button variant="outline" onClick={doImport}>Import JSON</Button>
+          <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={onFile} />
+        </div>
       </div>
     </div>
   );

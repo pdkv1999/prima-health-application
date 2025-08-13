@@ -2,45 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design System — all tokens in HSL. */
+/* Design System — Clinical Form Style */
 @layer base {
   :root {
-    /* Base */
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Clinical Form Colors */
+    --background: 0 0% 96%;  /* Light gray background like #f5f5f5 */
+    --foreground: 0 0% 20%;  /* Dark text like #333 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;       /* White form container */
+    --card-foreground: 0 0% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 20%;
 
-    /* Brand accent for this experience */
-    --brand: 200 85% 40%;
+    /* Form brand color - clinical blue */
+    --brand: 204 100% 50%;   /* #007bff blue */
     --brand-foreground: 0 0% 100%;
 
-    /* Semantic colors - hospital calm palette */
-    --primary: 203 83% 32%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - main interactive elements */
+    --primary: 204 100% 50%;  /* #007bff */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 200 56% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - subtle elements */
+    --secondary: 0 0% 93%;    /* Light gray like #f0f0f0 */
+    --secondary-foreground: 0 0% 27%;  /* #444 */
 
-    /* Accents tuned for clinical green highlights */
-    --accent: 160 44% 94%;
-    --accent-foreground: 160 25% 25%;
+    /* Accents for highlights */
+    --accent: 0 0% 98%;       /* Very light gray like #fafafa */
+    --accent-foreground: 0 0% 33%;  /* #555 */
 
-    --muted: 210 40% 97%;
-    --muted-foreground: 215 16% 42%;
+    --muted: 0 0% 87%;        /* #ddd */
+    --muted-foreground: 0 0% 33%;  /* #555 */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 210 30% 92%;
-    --input: 210 30% 92%;
-    --ring: 200 85% 40%; /* match brand for focus/interactive */
+    --border: 0 0% 80%;       /* #ccc */
+    --input: 0 0% 80%;        /* #ccc */
+    --ring: 204 100% 50%;     /* Focus ring matches primary */
 
-    --radius: 0.6rem;
+    --radius: 0.25rem;        /* 4px border radius */
 
     /* Sidebar (kept for component parity) */
     --sidebar-background: 210 40% 98%;
@@ -114,5 +115,54 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
       'Apple Color Emoji', 'Segoe UI Emoji';
+    padding: 0 15px;
+  }
+}
+
+/* Clinical Form Components */
+@layer components {
+  .form-container {
+    @apply bg-card rounded-lg shadow-lg p-6 max-w-4xl mx-auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .form-section {
+    @apply grid gap-5 mb-5;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .form-section.full-width {
+    @apply col-span-full;
+  }
+
+  .form-group {
+    @apply grid gap-2;
+  }
+
+  .form-group.full-width {
+    @apply col-span-full;
+  }
+
+  .section-title {
+    @apply text-lg font-medium text-secondary-foreground border-b border-muted pb-2 mb-4;
+  }
+
+  .checkbox-group {
+    @apply flex flex-wrap gap-3 items-center;
+  }
+
+  .radio-group {
+    @apply flex flex-wrap gap-3 items-center;
+  }
+
+  @media (max-width: 768px) {
+    .form-section {
+      @apply grid-cols-1;
+    }
+    
+    .checkbox-group,
+    .radio-group {
+      @apply flex-col items-start;
+    }
   }
 }

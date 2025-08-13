@@ -144,11 +144,11 @@ export function FormRenderer({ stageKey, sections }: Props) {
       case "checkboxes": {
         const arr: string[] = Array.isArray(v) ? v : [];
         return (
-          <div className="grid gap-2">
+          <div className="checkbox-group">
             {(field.options || []).map((opt: string) => {
               const checked = arr.includes(opt);
               return (
-                <label key={opt} className="flex items-center gap-2">
+                <label key={opt} className="flex items-center gap-2 font-normal text-sm">
                   <Checkbox
                     checked={checked}
                     onCheckedChange={(val) => {
@@ -191,11 +191,11 @@ export function FormRenderer({ stageKey, sections }: Props) {
       }
       case "radio": {
         return (
-          <RadioGroup value={v ?? ""} onValueChange={(val) => setVal(field.key, val)}>
+          <RadioGroup value={v ?? ""} onValueChange={(val) => setVal(field.key, val)} className="radio-group">
             {(field.options || []).map((opt: string) => (
               <div key={opt} className="flex items-center space-x-2">
                 <RadioGroupItem id={`${field.key}-${opt}`} value={opt} />
-                <Label htmlFor={`${field.key}-${opt}`}>{opt}</Label>
+                <Label htmlFor={`${field.key}-${opt}`} className="font-normal text-sm">{opt}</Label>
               </div>
             ))}
           </RadioGroup>
@@ -406,18 +406,21 @@ export function FormRenderer({ stageKey, sections }: Props) {
   }
 
   return (
-    <div className="w-full">
+    <div className="form-container">
       <div className="grid gap-6">
         {sectionsSafe.map((section, idx) => (
           <div key={idx} className="grid gap-4">
-            {section.title && <h3 className="text-lg font-semibold">{section.title}</h3>}
-            <div className="grid gap-4">
-              {(section.fields || []).map((f: any) => (
-                <div key={f.key || f.title} className="grid gap-2">
-                  {f.label && <Label>{f.label}</Label>}
-                  {renderSimpleField(f)}
-                </div>
-              ))}
+            {section.title && <h2 className="section-title">{section.title}</h2>}
+            <div className="form-section">
+              {(section.fields || []).map((f: any) => {
+                const isFullWidth = f.type === "textarea" || f.type === "group" || f.type === "table" || f.type === "criteria9";
+                return (
+                  <div key={f.key || f.title} className={cn("form-group", isFullWidth && "full-width")}>
+                    {f.label && <Label className="font-medium text-sm text-muted-foreground mb-2">{f.label}</Label>}
+                    {renderSimpleField(f)}
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
