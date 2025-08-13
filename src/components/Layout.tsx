@@ -42,19 +42,19 @@ export default function Layout() {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
+      <div className="apple-bg min-h-screen flex w-full">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
-          <header className="h-12 flex items-center justify-between border-b px-3 bg-gradient-to-r from-secondary to-accent/40 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+          <header className="glass-header h-14 flex items-center justify-between border-b border-white/20 px-4 backdrop-blur-md bg-white/10">
             <div className="flex items-center gap-2">
-              <SidebarTrigger />
-              <h1 className="text-sm font-medium">{appName}</h1>
+              <SidebarTrigger className="text-slate-700" />
+              <h1 className="text-sm font-medium text-slate-800">{appName}</h1>
             </div>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-slate-600 font-medium">
               Ref: PH25 - {refNumber} • Patient: {clientName}
             </div>
           </header>
-          <main className="p-4">
+          <main className="p-6">
             <Outlet />
           </main>
         </div>

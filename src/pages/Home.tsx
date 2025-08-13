@@ -57,7 +57,7 @@ export default function Home() {
 
 
   return (
-    <>
+    <div className="apple-bg">
       <Helmet>
         <title>ADHD Assessment Platform – Streamlined Patient Management</title>
         <meta
@@ -94,20 +94,20 @@ export default function Home() {
         </script>
       </Helmet>
 
-      <header className="sticky top-0 z-30 backdrop-blur supports-[backdrop-filter]:bg-background/70 bg-background/80 border-b border-border">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+      <header className="sticky top-0 z-30 backdrop-blur-md bg-white/10 border-b border-white/20">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
           <Link to="/" className="flex items-center gap-2 font-semibold hover-scale">
-            <ShieldCheck className="h-5 w-5 text-primary" aria-hidden />
-            <span>PrimaHealth</span>
+            <ShieldCheck className="h-5 w-5 text-slate-700" aria-hidden />
+            <span className="text-slate-800">PrimaHealth</span>
           </Link>
           <div className="hidden gap-6 md:flex">
-            <a href="#features" className="story-link">Features</a>
-            <a href="#process" className="story-link">Process</a>
-            <a href="#whatsapp" className="story-link">WhatsApp</a>
+            <a href="#features" className="story-link text-slate-700 hover:text-slate-900">Features</a>
+            <a href="#process" className="story-link text-slate-700 hover:text-slate-900">Process</a>
+            <a href="#whatsapp" className="story-link text-slate-700 hover:text-slate-900">WhatsApp</a>
             
           </div>
           <div className="hidden md:block">
-            <Button asChild>
+            <Button asChild className="glass-button text-slate-700 font-medium">
               <Link to="/stage1">Start Now</Link>
             </Button>
           </div>
@@ -141,22 +141,22 @@ export default function Home() {
 
               {/* Icon row */}
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <Card className="hover-scale">
+                <Card className="hover-scale report-glass">
                   <CardHeader className="flex-row items-center gap-3">
-                    <MessageCircle className="h-5 w-5 text-primary" aria-hidden />
-                    <CardTitle className="text-base">WhatsApp Communication</CardTitle>
+                    <MessageCircle className="h-5 w-5 text-slate-700" aria-hidden />
+                    <CardTitle className="text-base text-slate-800">WhatsApp Communication</CardTitle>
                   </CardHeader>
                 </Card>
-                <Card className="hover-scale">
+                <Card className="hover-scale report-glass">
                   <CardHeader className="flex-row items-center gap-3">
-                    <FileText className="h-5 w-5 text-primary" aria-hidden />
-                    <CardTitle className="text-base">Digital Terms via WhatsApp</CardTitle>
+                    <FileText className="h-5 w-5 text-slate-700" aria-hidden />
+                    <CardTitle className="text-base text-slate-800">Digital Terms via WhatsApp</CardTitle>
                   </CardHeader>
                 </Card>
-                <Card className="hover-scale">
+                <Card className="hover-scale report-glass">
                   <CardHeader className="flex-row items-center gap-3">
-                    <ShieldCheck className="h-5 w-5 text-primary" aria-hidden />
-                    <CardTitle className="text-base">Easy & Secure for Clinicians</CardTitle>
+                    <ShieldCheck className="h-5 w-5 text-slate-700" aria-hidden />
+                    <CardTitle className="text-base text-slate-800">Easy & Secure for Clinicians</CardTitle>
                   </CardHeader>
                 </Card>
               </div>
@@ -184,18 +184,18 @@ export default function Home() {
           {/* Horizontal scroll on mobile, grid on desktop */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {features.map(({ icon: Icon, title, desc }) => (
-              <Card key={title} className="group hover-scale animate-fade-in">
+              <Card key={title} className="group hover-scale animate-fade-in report-glass">
                 <CardHeader>
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                      <Icon className="h-5 w-5 text-primary" aria-hidden />
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-slate-700/10">
+                      <Icon className="h-5 w-5 text-slate-700" aria-hidden />
                     </span>
-                    <CardTitle className="text-lg">{title}</CardTitle>
+                    <CardTitle className="text-lg text-slate-800">{title}</CardTitle>
                   </div>
-                  <CardDescription className="pt-2">{desc}</CardDescription>
+                  <CardDescription className="pt-2 text-slate-600">{desc}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button variant="ghost" asChild className="justify-start px-0">
+                  <Button variant="ghost" asChild className="justify-start px-0 text-slate-700 hover:text-slate-900">
                     <Link to={title.includes("Stage 1") ? "/stage1" : title.includes("Stage 2") ? "/stage2" : title.includes("Stage 3") ? "/stage3" : "/"}>
                       Learn more
                       <ChevronRight className="ml-1 h-4 w-4" aria-hidden />
@@ -279,7 +279,7 @@ export default function Home() {
 
       </main>
 
-      <footer className="border-t border-border">
+      <footer className="border-t border-white/20 bg-white/5 backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm md:flex-row">
           <p className="text-muted-foreground">© {new Date().getFullYear()} PrimaHealth. All rights reserved.</p>
           <nav className="flex items-center gap-5">
@@ -290,6 +290,6 @@ export default function Home() {
           </nav>
         </div>
       </footer>
-    </>
+    </div>
   );
 }

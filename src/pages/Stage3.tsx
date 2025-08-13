@@ -53,36 +53,55 @@ export default function Stage3() {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto my-5">
-      <div className="form-container">
-        <h1 className="text-center text-foreground mb-5 text-2xl font-medium">{ph25Spec.stages.stage3.title}</h1>
+    <div className="max-w-5xl mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-light tracking-tight text-slate-800 mb-2">{ph25Spec.stages.stage3.title}</h1>
+        <p className="text-slate-600 font-light">Final Assessment and Clinical Observations</p>
       </div>
       
-      <FormRenderer stageKey="stage3" sections={ph25Spec.stages.stage3.sections as any} />
+      <div className="report-glass p-8 mb-8">
+        <FormRenderer stageKey="stage3" sections={ph25Spec.stages.stage3.sections as any} />
+      </div>
       
-      <div className="form-container mt-5">
-        <div className="flex flex-wrap gap-3 pt-2">
-          <Button onClick={() => toast({ description: "Saved" })}>Save</Button>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              const res = validateRequired();
-              if (!res.ok) {
-                toast({
-                  title: "Missing required fields",
-                  description: res.missing.join(", "),
-                });
-                return;
-              }
-              navigate("/report");
-            }}
-          >
-            Next Stage
-          </Button>
-          <Button variant="outline" onClick={doExport}>Export JSON</Button>
-          <Button variant="outline" onClick={doImport}>Import JSON</Button>
-          <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={onFile} />
-        </div>
+      <div className="flex flex-wrap justify-center gap-4">
+        <Button 
+          onClick={() => toast({ description: "Saved" })}
+          className="glass-button text-slate-700 font-medium px-6 py-3"
+        >
+          Save
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            const res = validateRequired();
+            if (!res.ok) {
+              toast({
+                title: "Missing required fields",
+                description: res.missing.join(", "),
+              });
+              return;
+            }
+            navigate("/report");
+          }}
+          className="glass-button text-slate-700 font-medium px-6 py-3"
+        >
+          Next Stage
+        </Button>
+        <Button 
+          variant="outline" 
+          onClick={doExport}
+          className="glass-button text-slate-700 font-medium px-6 py-3"
+        >
+          Export JSON
+        </Button>
+        <Button 
+          variant="outline" 
+          onClick={doImport}
+          className="glass-button text-slate-700 font-medium px-6 py-3"
+        >
+          Import JSON
+        </Button>
+        <input ref={fileRef} type="file" accept="application/json" className="hidden" onChange={onFile} />
       </div>
     </div>
   );

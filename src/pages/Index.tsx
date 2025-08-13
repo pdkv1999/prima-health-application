@@ -145,7 +145,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="min-h-screen relative">
+    <div ref={containerRef} className="apple-bg min-h-screen relative">
       <header className="relative overflow-hidden">
         <div
           aria-hidden
@@ -154,11 +154,11 @@ const Index = () => {
         />
         <div className="container py-14 md:py-20">
           <div className="flex flex-col items-center text-center gap-4 animate-fade-in-up">
-            <Badge className="bg-accent text-accent-foreground border border-border">Clinical Workflow</Badge>
-            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">
+            <Badge className="glass-button border-white/20">Clinical Workflow</Badge>
+            <h1 className="text-3xl md:text-5xl font-light tracking-tight text-slate-800">
               ADHD Assessment Process – 4 Stages
             </h1>
-            <p className="text-muted-foreground max-w-2xl">
+            <p className="text-slate-600 max-w-2xl font-light">
               A clear, structured pathway from intake to final report. Designed to capture DSM-5 criteria while keeping clinician cognitive load in mind.
             </p>
 
@@ -179,29 +179,29 @@ const Index = () => {
               <Card
                 key={s.id}
                 id={`stage-${s.id}`}
-                className="border bg-card text-card-foreground transition-transform duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]"
+                className="report-glass text-slate-800 transition-transform duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elegant)]"
               >
                 <CardHeader className="space-y-1">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className="inline-flex items-center justify-center h-8 w-8 rounded-md bg-secondary">
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <span className="inline-flex items-center justify-center h-8 w-8 rounded-md bg-slate-700/10">
                       {s.icon}
                     </span>
                     <span className="text-sm">Stage {s.id}</span>
                   </div>
-                  <CardTitle className="text-xl">{s.name}</CardTitle>
-                  <CardDescription className="flex items-center gap-2">
+                  <CardTitle className="text-xl text-slate-800">{s.name}</CardTitle>
+                  <CardDescription className="flex items-center gap-2 text-slate-600">
                     <Clock className="h-4 w-4" aria-hidden />
                     <span>{s.durationHours} hours</span>
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <p className="text-sm text-muted-foreground">{s.summary}</p>
-                  <Separator />
+                  <p className="text-sm text-slate-600">{s.summary}</p>
+                  <Separator className="bg-white/20" />
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value={`details-${s.id}`}>
-                      <AccordionTrigger>View details</AccordionTrigger>
+                      <AccordionTrigger className="text-slate-700">View details</AccordionTrigger>
                       <AccordionContent>
-                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                        <ul className="list-disc pl-5 space-y-1 text-sm text-slate-600">
                           {s.details.map((d, i) => (
                             <li key={i}>{d}</li>
                           ))}
@@ -216,7 +216,7 @@ const Index = () => {
         </section>
       </main>
 
-      <footer className="container pb-10 text-center text-xs text-muted-foreground">
+      <footer className="container pb-10 text-center text-xs text-slate-500">
         <p>This page is SEO-optimized with a single H1, structured data (HowTo), and a canonical URL.</p>
       </footer>
     </div>
@@ -225,14 +225,14 @@ const Index = () => {
 
 function MetricCard({ title, icon, children }: { title: string; icon: JSX.Element; children: React.ReactNode }) {
   return (
-    <Card className="bg-card text-card-foreground border">
+    <Card className="report-glass text-slate-800">
       <CardContent className="pt-6">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">{title}</p>
-            <p className="text-lg font-medium">{children}</p>
+            <p className="text-xs uppercase tracking-wide text-slate-600">{title}</p>
+            <p className="text-lg font-medium text-slate-800">{children}</p>
           </div>
-          <div className="h-9 w-9 rounded-md bg-secondary grid place-items-center text-foreground">
+          <div className="h-9 w-9 rounded-md bg-slate-700/10 grid place-items-center text-slate-700">
             {icon}
           </div>
         </div>

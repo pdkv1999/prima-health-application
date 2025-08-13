@@ -149,250 +149,256 @@ export default function Analytics() {
   const pieColors = ["hsl(var(--primary))", "hsl(var(--muted-foreground))"];
 
   return (
-    <div className="grid gap-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Analytics Dashboard</h1>
-        <div className="flex items-center gap-3 text-sm">
-          <div className="flex items-center gap-2">
-            <span className="text-muted-foreground">Cases / month</span>
-            <Input
-              aria-label="Cases per month"
-              type="number"
-              className="w-24"
-              value={casesPerMonth}
-              min={1}
-              onChange={(e) => setCasesPerMonth(Math.max(1, Number(e.currentTarget.value || 1)))}
-            />
+    <div className="max-w-7xl mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-light tracking-tight text-slate-800 mb-2">Analytics Dashboard</h1>
+        <p className="text-slate-600 font-light">Performance insights and impact metrics</p>
+      </div>
+
+      <div className="report-glass p-8">
+        <header className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-slate-600">Cases / month</span>
+              <Input
+                aria-label="Cases per month"
+                type="number"
+                className="w-24"
+                value={casesPerMonth}
+                min={1}
+                onChange={(e) => setCasesPerMonth(Math.max(1, Number(e.currentTarget.value || 1)))}
+              />
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <main className="grid gap-6">
-        {/* KPI cards */}
-        <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-muted-foreground">Time saved per patient</CardTitle>
-            </CardHeader>
-            <CardContent className="flex items-end justify-between">
-              <div className="text-2xl font-semibold">{hoursSaved.toFixed(1)}h</div>
-              <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                <Timer className="h-4 w-4" />
-                <span className="text-sm font-medium">{pctSaved}%</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-muted-foreground">Money saved per patient</CardTitle>
-            </CardHeader>
-            <CardContent className="flex items-end justify-between">
-              <div className="text-2xl font-semibold">{formatCurrencyEUR(moneySavedPerPatient)}</div>
-              <Euro className="h-4 w-4 text-muted-foreground" />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-muted-foreground">Capacity impact</CardTitle>
-            </CardHeader>
-            <CardContent className="flex items-end justify-between">
-              <div className="text-2xl font-semibold">Up to {capacityXDisplay}×</div>
-              <Gauge className="h-4 w-4 text-muted-foreground" />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-muted-foreground">Stage 1 status</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Badge variant={stage1Status === "Complete" ? "default" : stage1Status === "In Progress" ? "secondary" : "outline"}>
-                  {stage1Status}
-                </Badge>
-                <span className="text-xs text-muted-foreground">
-                  {filledCount}/{required.length} required fields
-                </span>
-              </div>
-              <Progress value={Number.isFinite(percentComplete) ? percentComplete : 0} aria-label="Stage 1 completion" />
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Charts row 1 */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Time savings</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer
-                config={{
-                  hours: { label: "Hours", color: "hsl(var(--primary))" },
-                }}
-                className="w-full"
-              >
-                <BarChart data={timeCompare}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="label" />
-                  <YAxis />
-                  <Bar dataKey="hours" radius={[6, 6, 0, 0]} />
-                  <ChartTooltip content={<ChartTooltipContent labelKey="label" />} />
-                </BarChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Capacity impact</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer
-                config={{
-                  cases: { label: "Cases", color: "hsl(var(--primary))" },
-                }}
-                className="w-full"
-              >
-                <BarChart data={capacityData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="label" />
-                  <YAxis allowDecimals={false} />
-                  <Bar dataKey="cases" radius={[6, 6, 0, 0]} />
-                  <ChartTooltip content={<ChartTooltipContent labelKey="label" />} />
-                </BarChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Charts row 2 */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Monthly savings trend</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer
-                config={{
-                  timeSavedH: { label: "Hours saved", color: "hsl(var(--primary))" },
-                  moneySaved: { label: "Money saved", color: "hsl(var(--chart-2, var(--primary)))" },
-                }}
-                className="w-full"
-              >
-                <AreaChart data={trendData}>
-                  <defs>
-                    <linearGradient id="money" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.35} />
-                      <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.05} />
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis yAxisId="left" orientation="left" />
-                  <YAxis yAxisId="right" orientation="right" tickFormatter={(v) => formatCurrencyEUR(v)} />
-                  <Area yAxisId="left" type="monotone" dataKey="timeSavedH" stroke="hsl(var(--primary))" fill="url(#money)" strokeWidth={2} />
-                  <Line yAxisId="right" type="monotone" dataKey="moneySaved" stroke="hsl(var(--muted-foreground))" strokeWidth={2} dot={false} />
-                  <ChartTooltip content={<ChartTooltipContent labelKey="month" />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                </AreaChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Quality & objectivity</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer
-                config={{
-                  Before: { label: "Before", color: "hsl(var(--muted-foreground))" },
-                  After: { label: "With PH25", color: "hsl(var(--primary))" },
-                }}
-                className="w-full"
-              >
-                <BarChart data={qualityData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="metric" />
-                  <YAxis domain={[0, 100]} />
-                  <Bar dataKey="Before" radius={[6, 6, 0, 0]} fill="hsl(var(--muted-foreground))" />
-                  <Bar dataKey="After" radius={[6, 6, 0, 0]} fill="hsl(var(--primary))" />
-                  <ChartTooltip content={<ChartTooltipContent labelKey="metric" />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                </BarChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-        </section>
-
-        {/* Charts row 3 */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Standardisation & governance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer
-                config={{ adoption: { label: "Standardised docs adoption (%)", color: "hsl(var(--primary))" } }}
-                className="w-full"
-              >
-                <LineChart data={standardisationTrend}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis domain={[0, 100]} />
-                  <Line type="monotone" dataKey="adoption" stroke="hsl(var(--primary))" strokeWidth={2} dot />
-                  <ChartTooltip content={<ChartTooltipContent labelKey="month" />} />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Focus shift</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <div className="mb-2 text-sm text-muted-foreground">Before</div>
-                  <ChartContainer
-                    config={{ value: { label: "Focus share", color: "hsl(var(--primary))" } }}
-                    className="w-full h-[220px]"
-                  >
-                    <PieChart>
-                      <Pie data={focusPre} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={4}>
-                        {focusPre.map((_, idx) => (
-                          <Cell key={idx} fill={pieColors[idx % pieColors.length]} />
-                        ))}
-                      </Pie>
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                    </PieChart>
-                  </ChartContainer>
+        <main className="grid gap-6">
+          {/* KPI cards */}
+          <section className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <Card className="glass-button">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-slate-600">Time saved per patient</CardTitle>
+              </CardHeader>
+              <CardContent className="flex items-end justify-between">
+                <div className="text-2xl font-semibold text-slate-800">{hoursSaved.toFixed(1)}h</div>
+                <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+                  <Timer className="h-4 w-4" />
+                  <span className="text-sm font-medium">{pctSaved}%</span>
                 </div>
-                <div>
-                  <div className="mb-2 text-sm text-muted-foreground">With PH25</div>
-                  <ChartContainer
-                    config={{ value: { label: "Focus share", color: "hsl(var(--primary))" } }}
-                    className="w-full h-[220px]"
-                  >
-                    <PieChart>
-                      <Pie data={focusPost} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={4}>
-                        {focusPost.map((_, idx) => (
-                          <Cell key={idx} fill={pieColors[idx % pieColors.length]} />
-                        ))}
-                      </Pie>
-                      <ChartTooltip content={<ChartTooltipContent />} />
-                    </PieChart>
-                  </ChartContainer>
+              </CardContent>
+            </Card>
+
+            <Card className="glass-button">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-slate-600">Money saved per patient</CardTitle>
+              </CardHeader>
+              <CardContent className="flex items-end justify-between">
+                <div className="text-2xl font-semibold text-slate-800">{formatCurrencyEUR(moneySavedPerPatient)}</div>
+                <Euro className="h-4 w-4 text-slate-600" />
+              </CardContent>
+            </Card>
+
+            <Card className="glass-button">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-slate-600">Capacity impact</CardTitle>
+              </CardHeader>
+              <CardContent className="flex items-end justify-between">
+                <div className="text-2xl font-semibold text-slate-800">Up to {capacityXDisplay}×</div>
+                <Gauge className="h-4 w-4 text-slate-600" />
+              </CardContent>
+            </Card>
+
+            <Card className="glass-button">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm text-slate-600">Stage 1 status</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Badge variant={stage1Status === "Complete" ? "default" : stage1Status === "In Progress" ? "secondary" : "outline"}>
+                    {stage1Status}
+                  </Badge>
+                  <span className="text-xs text-slate-600">
+                    {filledCount}/{required.length} required fields
+                  </span>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
-      </main>
+                <Progress value={Number.isFinite(percentComplete) ? percentComplete : 0} aria-label="Stage 1 completion" />
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Charts row 1 */}
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Card className="glass-button">
+              <CardHeader>
+                <CardTitle className="text-slate-800">Time savings</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer
+                  config={{
+                    hours: { label: "Hours", color: "hsl(var(--primary))" },
+                  }}
+                  className="w-full"
+                >
+                  <BarChart data={timeCompare}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="label" />
+                    <YAxis />
+                    <Bar dataKey="hours" radius={[6, 6, 0, 0]} />
+                    <ChartTooltip content={<ChartTooltipContent labelKey="label" />} />
+                  </BarChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+
+            <Card className="glass-button">
+              <CardHeader>
+                <CardTitle className="text-slate-800">Capacity impact</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer
+                  config={{
+                    cases: { label: "Cases", color: "hsl(var(--primary))" },
+                  }}
+                  className="w-full"
+                >
+                  <BarChart data={capacityData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="label" />
+                    <YAxis allowDecimals={false} />
+                    <Bar dataKey="cases" radius={[6, 6, 0, 0]} />
+                    <ChartTooltip content={<ChartTooltipContent labelKey="label" />} />
+                  </BarChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Charts row 2 */}
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Card className="glass-button">
+              <CardHeader>
+                <CardTitle className="text-slate-800">Monthly savings trend</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer
+                  config={{
+                    timeSavedH: { label: "Hours saved", color: "hsl(var(--primary))" },
+                    moneySaved: { label: "Money saved", color: "hsl(var(--chart-2, var(--primary)))" },
+                  }}
+                  className="w-full"
+                >
+                  <AreaChart data={trendData}>
+                    <defs>
+                      <linearGradient id="money" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.35} />
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.05} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis yAxisId="left" orientation="left" />
+                    <YAxis yAxisId="right" orientation="right" tickFormatter={(v) => formatCurrencyEUR(v)} />
+                    <Area yAxisId="left" type="monotone" dataKey="timeSavedH" stroke="hsl(var(--primary))" fill="url(#money)" strokeWidth={2} />
+                    <Line yAxisId="right" type="monotone" dataKey="moneySaved" stroke="hsl(var(--muted-foreground))" strokeWidth={2} dot={false} />
+                    <ChartTooltip content={<ChartTooltipContent labelKey="month" />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                  </AreaChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+
+            <Card className="glass-button">
+              <CardHeader>
+                <CardTitle className="text-slate-800">Quality & objectivity</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer
+                  config={{
+                    Before: { label: "Before", color: "hsl(var(--muted-foreground))" },
+                    After: { label: "With PH25", color: "hsl(var(--primary))" },
+                  }}
+                  className="w-full"
+                >
+                  <BarChart data={qualityData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="metric" />
+                    <YAxis domain={[0, 100]} />
+                    <Bar dataKey="Before" radius={[6, 6, 0, 0]} fill="hsl(var(--muted-foreground))" />
+                    <Bar dataKey="After" radius={[6, 6, 0, 0]} fill="hsl(var(--primary))" />
+                    <ChartTooltip content={<ChartTooltipContent labelKey="metric" />} />
+                    <ChartLegend content={<ChartLegendContent />} />
+                  </BarChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+          </section>
+
+          {/* Charts row 3 */}
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <Card className="glass-button">
+              <CardHeader>
+                <CardTitle className="text-slate-800">Standardisation & governance</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer
+                  config={{ adoption: { label: "Standardised docs adoption (%)", color: "hsl(var(--primary))" } }}
+                  className="w-full"
+                >
+                  <LineChart data={standardisationTrend}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis domain={[0, 100]} />
+                    <Line type="monotone" dataKey="adoption" stroke="hsl(var(--primary))" strokeWidth={2} dot />
+                    <ChartTooltip content={<ChartTooltipContent labelKey="month" />} />
+                  </LineChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+
+            <Card className="glass-button">
+              <CardHeader>
+                <CardTitle className="text-slate-800">Focus shift</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <div className="mb-2 text-sm text-slate-600">Before</div>
+                    <ChartContainer
+                      config={{ value: { label: "Focus share", color: "hsl(var(--primary))" } }}
+                      className="w-full h-[220px]"
+                    >
+                      <PieChart>
+                        <Pie data={focusPre} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={4}>
+                          {focusPre.map((_, idx) => (
+                            <Cell key={idx} fill={pieColors[idx % pieColors.length]} />
+                          ))}
+                        </Pie>
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                      </PieChart>
+                    </ChartContainer>
+                  </div>
+                  <div>
+                    <div className="mb-2 text-sm text-slate-600">With PH25</div>
+                    <ChartContainer
+                      config={{ value: { label: "Focus share", color: "hsl(var(--primary))" } }}
+                      className="w-full h-[220px]"
+                    >
+                      <PieChart>
+                        <Pie data={focusPost} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={4}>
+                          {focusPost.map((_, idx) => (
+                            <Cell key={idx} fill={pieColors[idx % pieColors.length]} />
+                          ))}
+                        </Pie>
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                      </PieChart>
+                    </ChartContainer>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
