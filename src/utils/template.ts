@@ -2,7 +2,7 @@ export function getByPath(obj: any, path: string) {
   return path.split(".").reduce((acc, key) => (acc == null ? acc : acc[key]), obj);
 }
 
-export function renderTemplate(html: string, data: any) {
+export function renderTemplate(html: string, data: any, opts?: { highlightDynamic?: boolean }) {
   function escapeHtml(str: string) {
     return str
       .replace(/&/g, "&amp;")
@@ -12,19 +12,19 @@ export function renderTemplate(html: string, data: any) {
       .replace(/'/g, "&#039;");
   }
 
-  function listHtml(arr: any[]) {
-    return `<li>${arr.map((x) => escapeHtml(String(x))).join("</li><li>")}</li>`;
-  }
-  function tableHtml(rows: any[]) {
-    if (!Array.isArray(rows)) return "";
-    const th = `<tr><th>Task</th><th>Yes</th><th>No</th><th>Notes</th></tr>`;
-    const tb = rows
-      .map((r) => `<tr><td>${escapeHtml(r.task || "")}</td><td>${r.yes ? "✔" : ""}</td><td>${r.no ? "✔" : ""}</td><td>${escapeHtml(r.notes || "")}</td></tr>`) //
-      .join("");
-    return `<table>${th}${tb}</table>`;
+  function maybeWrapHighlight(str: string) {
+    if (opts && opts.highlightDynamic) {
+      return `<span class="autofill-highlight">${str}</span>`;
+    }
+    return str;
   }
 
-  return html.replace(/\{\{([^}]+)\}\}/g, (_, expr) => {
+  function listHtml(arr: any[]) {
+    return maybeWrapHighlight(`<li>${arr.map((x) => escapeHtml(String(x))).join("</li><li>")}</li>`);
+  }
+
+  const re = /\{\{([^}]+)\}\}/g;
+  return html.replace(re, (_, expr) => {
     try {
       let raw = expr.trim();
       // split filters
@@ -34,37 +34,45 @@ export function renderTemplate(html: string, data: any) {
       let val = getByPath(data, path);
       const paramMap: Record<string, string> = {};
       params.forEach((p) => {
-        const m = p.match(/(\w+)\s*=\s*['\"]([^'\"]*)['\"]/);
-        if (m) paramMap[m[1]] = m[2];
+        const [k, v] = p.split("=").map((s) => s.trim());
+        if (k && v) paramMap[k] = v.replace(/^['"]|['"]$/g, "");
       });
 
-      if (Array.isArray(val) && paramMap.join) {
-        return escapeHtml(val.join(paramMap.join));
-      }
-
-      if (pipes.length) {
-        const filter = pipes[0];
+      // process pipes
+      for (const p of pipes) {
+        const [filter, argStr] = p.split(":").map((s: string) => s.trim());
         if (filter === "list") {
-          const arr = Array.isArray(val) ? val : [];
-          return `<li>${arr.map((x: any) => escapeHtml(String(x))).join("</li><li>")}</li>`;
+          if (!Array.isArray(val)) return "";
+          return maybeWrapHighlight(`<ol>${listHtml(val)}</ol>`);
         }
-        if (filter === "table") {
-          return tableHtml(val);
+        if (filter === "ulist") {
+          if (!Array.isArray(val)) return "";
+          return maybeWrapHighlight(`<ul>${listHtml(val)}</ul>`);
         }
-        if (filter === "criteria_table") {
-          const arr = Array.isArray(val) ? val : [];
-          const rows = arr
-            .map((x: any) => `<tr><td>${escapeHtml(String(x))}</td><td>Yes</td></tr>`)
+        if (filter === "join") {
+          const joinBy = (paramMap["join"] ?? ", ");
+          if (!Array.isArray(val)) return "";
+          return maybeWrapHighlight(escapeHtml(String(val.join(joinBy))));
+        }
+        if (filter === "criteriaTable") {
+          // expects array of {criteria: string, met: boolean}
+          if (!Array.isArray(val)) return "";
+          const rows = val
+            .map((x) => {
+              const c = escapeHtml(String(x.criteria ?? ""));
+              const m = x.met ? "Yes" : "No";
+              return `<tr><td>${c}</td><td>${m}</td></tr>`;
+            })
             .join("");
-          return `<table class="criteria"><tr><th>Criteria</th><th>Criteria Met</th></tr>${rows}</table>`;
+          return maybeWrapHighlight(`<table class="criteria"><tr><th>Criteria</th><th>Criteria Met</th></tr>${rows}</table>`);
         }
         if (filter === "json") {
-          return escapeHtml(JSON.stringify(val, null, 2));
+          return maybeWrapHighlight(escapeHtml(JSON.stringify(val, null, 2)));
         }
       }
 
       if (val == null) return "";
-      return escapeHtml(String(val));
+      return maybeWrapHighlight(escapeHtml(String(val)));
     } catch (e) {
       return "";
     }

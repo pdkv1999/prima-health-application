@@ -234,4 +234,11 @@
       @apply flex-col items-start;
     }
   }
+
+  /* Highlight for auto-populated fields during normal editing/review */
+  .autofill-highlight {
+    background: rgba(255, 240, 0, 0.35); /* soft yellow */
+    border-radius: 0.25rem;
+    padding: 0 .2em;
+  }
 }
