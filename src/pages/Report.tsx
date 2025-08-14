@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { useCaseStore } from "@/store/useCaseStore";
 import { ph25Spec } from "@/spec/ph25Spec";
 import { renderTemplate } from "@/utils/template";
+import { getMayaSeed } from "@/utils/seedMaya";
 
 export default function Report() {
   const meta = useCaseStore((s) => s.meta)
