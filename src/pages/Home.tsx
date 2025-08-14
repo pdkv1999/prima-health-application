@@ -183,9 +183,6 @@ export default function Home() {
                     <ChevronRight className="ml-1 h-4 w-4" aria-hidden />
                   </Link>
                 </Button>
-                <Button variant="outline" asChild>
-                  <a href="#features" aria-label="Learn more about platform features">Learn More</a>
-                </Button>
               </div>
 
               {/* Icon row */}
