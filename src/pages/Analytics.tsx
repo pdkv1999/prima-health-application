@@ -207,23 +207,6 @@ export default function Analytics() {
                 <Gauge className="h-4 w-4 text-slate-600" />
               </CardContent>
             </Card>
-
-            <Card className="glass-button">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm text-slate-600">Stage 1 status</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Badge variant={stage1Status === "Complete" ? "default" : stage1Status === "In Progress" ? "secondary" : "outline"}>
-                    {stage1Status}
-                  </Badge>
-                  <span className="text-xs text-slate-600">
-                    {filledCount}/{required.length} required fields
-                  </span>
-                </div>
-                <Progress value={Number.isFinite(percentComplete) ? percentComplete : 0} aria-label="Stage 1 completion" />
-              </CardContent>
-            </Card>
           </section>
 
           {/* Charts row 1 */}
@@ -240,10 +223,16 @@ export default function Analytics() {
                   className="w-full"
                 >
                   <BarChart data={timeCompare}>
+                    <defs>
+                      <linearGradient id="timeGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.85} />
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="label" />
                     <YAxis />
-                    <Bar dataKey="hours" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="hours" radius={[6, 6, 0, 0]} fill="url(#timeGradient)" />
                     <ChartTooltip content={<ChartTooltipContent labelKey="label" />} />
                   </BarChart>
                 </ChartContainer>
@@ -262,10 +251,16 @@ export default function Analytics() {
                   className="w-full"
                 >
                   <BarChart data={capacityData}>
+                    <defs>
+                      <linearGradient id="capacityGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.85} />
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="label" />
                     <YAxis allowDecimals={false} />
-                    <Bar dataKey="cases" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="cases" radius={[6, 6, 0, 0]} fill="url(#capacityGradient)" />
                     <ChartTooltip content={<ChartTooltipContent labelKey="label" />} />
                   </BarChart>
                 </ChartContainer>
@@ -283,7 +278,7 @@ export default function Analytics() {
                 <ChartContainer
                   config={{
                     timeSavedH: { label: "Hours saved", color: "hsl(var(--primary))" },
-                    moneySaved: { label: "Money saved", color: "hsl(var(--chart-2, var(--primary)))" },
+                    moneySaved: { label: "Money saved", color: "hsl(var(--muted-foreground))" },
                   }}
                   className="w-full"
                 >
@@ -320,11 +315,21 @@ export default function Analytics() {
                   className="w-full"
                 >
                   <BarChart data={qualityData}>
+                    <defs>
+                      <linearGradient id="beforeGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--muted-foreground))" stopOpacity={0.85} />
+                        <stop offset="100%" stopColor="hsl(var(--muted-foreground))" stopOpacity={0.25} />
+                      </linearGradient>
+                      <linearGradient id="afterGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.85} />
+                        <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="metric" />
                     <YAxis domain={[0, 100]} />
-                    <Bar dataKey="Before" radius={[6, 6, 0, 0]} fill="hsl(var(--muted-foreground))" />
-                    <Bar dataKey="After" radius={[6, 6, 0, 0]} fill="hsl(var(--primary))" />
+                    <Bar dataKey="Before" radius={[6, 6, 0, 0]} fill="url(#beforeGradient)" />
+                    <Bar dataKey="After" radius={[6, 6, 0, 0]} fill="url(#afterGradient)" />
                     <ChartTooltip content={<ChartTooltipContent labelKey="metric" />} />
                     <ChartLegend content={<ChartLegendContent />} />
                   </BarChart>
@@ -341,7 +346,9 @@ export default function Analytics() {
               </CardHeader>
               <CardContent>
                 <ChartContainer
-                  config={{ adoption: { label: "Standardised docs adoption (%)", color: "hsl(var(--primary))" } }}
+                  config={{
+                    adoption: { label: "Standardised docs adoption (%)", color: "hsl(var(--primary))" },
+                  }}
                   className="w-full"
                 >
                   <LineChart data={standardisationTrend}>
