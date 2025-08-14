@@ -57,7 +57,9 @@ const voiceAllowlist: Record<"stage1" | "stage2" | "stage3", string[]> = {
     "criteria_details", 
     "aftercare_details", 
     "recommendations", 
-    "additional_notes_final"
+    "additional_notes_final",
+    "med_other_details",  // Further Medical Investigations -> Other (add details)
+    "allied_details"      // Allied Details
   ],
 };
 const shouldShowVoice = (stage: "stage1" | "stage2" | "stage3", key: string, type?: string) => {
