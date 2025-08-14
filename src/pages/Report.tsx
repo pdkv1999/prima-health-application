@@ -139,9 +139,36 @@ export default function Report() {
 
 
         {/* Page Navigation */}
-        {totalPages > 1 && (
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-medium text-slate-700">{currentSection.title}</h2>
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center space-x-4">
+            {/* Left Arrow */}
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className="flex items-center space-x-2"
+            >
+              <span>←</span>
+              <span>Previous</span>
+            </Button>
+            
+            <h2 className="text-lg font-medium text-slate-700">{totalPages > 1 ? currentSection.title : "Complete Report"}</h2>
+            
+            {/* Right Arrow */}
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+              disabled={currentPage === totalPages || totalPages <= 1}
+              className="flex items-center space-x-2"
+            >
+              <span>Next</span>
+              <span>→</span>
+            </Button>
+          </div>
+
+          {totalPages > 1 && (
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
@@ -169,8 +196,8 @@ export default function Report() {
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
-          </div>
-        )}
+          )}
+        </div>
 
         <div
           id="reportContent"
@@ -182,10 +209,17 @@ export default function Report() {
           </article>
         </div>
 
-        <div className="flex flex-wrap gap-3 justify-end">
-          <Button variant="secondary" onClick={saveReport}>Save Report</Button>
-          <Button variant="outline" onClick={previewReport}>Preview & Export</Button>
-          <Button onClick={() => setOpen(true)}>Send Encrypted Email</Button>
+        <div className="flex flex-wrap gap-3 justify-between items-center">
+          {/* Total Pages at Bottom */}
+          <div className="text-sm text-muted-foreground">
+            {totalPages > 1 ? `Page ${currentPage} of ${totalPages} total pages` : `Single page report`}
+          </div>
+          
+          <div className="flex gap-3">
+            <Button variant="secondary" onClick={saveReport}>Save Report</Button>
+            <Button variant="outline" onClick={previewReport}>Preview & Export</Button>
+            <Button onClick={() => setOpen(true)}>Send Encrypted Email</Button>
+          </div>
         </div>
 
         {/* Email dialog */}
