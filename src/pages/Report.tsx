@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { useCaseStore } from "@/store/useCaseStore";
 import { ph25Spec } from "@/spec/ph25Spec";
 import { renderTemplate } from "@/utils/template";
 import { handleReportClick } from "@/utils/navigation";
 import { reportBindings } from "@/store/reportBindings";
-import { CompletenessValidator } from "@/components/CompletenessValidator";
 import { sendEncryptedEmail } from "@/utils/emailService";
 
 export default function Report() {
@@ -37,8 +36,28 @@ export default function Report() {
   const bulkSet = useCaseStore((s) => s.bulkSet);
   const [open, setOpen] = useState(false);
   const [emailSending, setEmailSending] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const reportRef = useRef<HTMLDivElement>(null);
+
+  // Split report content into pages for better navigation
+  const pagesPerView = 1;
+  const reportSections = useMemo(() => {
+    if (!htmlHighlighted) return [];
+    
+    // Split the HTML content into logical sections
+    const sections = [
+      { title: "Patient Information & Referral", content: htmlHighlighted.split('<h2>')[0] + (htmlHighlighted.split('<h2>')[1] ? '<h2>' + htmlHighlighted.split('<h2>')[1].split('<h2>')[0] : '') },
+      { title: "Developmental & Medical History", content: htmlHighlighted.split('<h2>')[2] ? '<h2>' + htmlHighlighted.split('<h2>')[2].split('<h2>')[0] : '' },
+      { title: "Clinical Assessment & Observations", content: htmlHighlighted.split('<h2>')[3] ? '<h2>' + htmlHighlighted.split('<h2>')[3].split('<h2>')[0] : '' },
+      { title: "Diagnosis & Recommendations", content: htmlHighlighted.split('<h2>').slice(4).map(section => '<h2>' + section).join('') }
+    ].filter(section => section.content.trim());
+    
+    return sections;
+  }, [htmlHighlighted]);
+
+  const totalPages = Math.max(1, reportSections.length);
+  const currentSection = reportSections[currentPage - 1] || { title: "", content: htmlHighlighted };
 
   const saveReport = async () => {
     const finalText = (new DOMParser().parseFromString(cleanHtml, "text/html")).body.innerText;
@@ -118,18 +137,48 @@ export default function Report() {
           <p className="text-slate-600 font-light">PrimaHealth ADHD Assessment (PH25)</p>
         </div>
 
-        {/* Completeness Validation */}
-        <div className="mb-6">
-          <CompletenessValidator onNavigateToField={navigateToField} />
-        </div>
+
+        {/* Page Navigation */}
+        {totalPages > 1 && (
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-medium text-slate-700">{currentSection.title}</h2>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(page)}
+                      isActive={currentPage === page}
+                      className="cursor-pointer"
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
 
         <div
           id="reportContent"
           ref={reportRef}
-          className="report-glass p-8"
+          className="report-glass p-8 min-h-[600px]"
         >
           <article className="prose prose-slate max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: htmlHighlighted }} />
+            <div dangerouslySetInnerHTML={{ __html: totalPages > 1 ? currentSection.content : htmlHighlighted }} />
           </article>
         </div>
 
