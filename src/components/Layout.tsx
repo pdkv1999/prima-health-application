@@ -31,7 +31,7 @@ export default function Layout() {
   const rawClient = useCaseStore((s) => s.meta?.clientName || s.stage1?.clientName || "—");
 
   // Mask sensitive identifiers in UI
-  const refNumber = "0001";
+  const refNumber = "12345";
   const clientName = "Alex Morgan";
 
   useAutosaveToast();
