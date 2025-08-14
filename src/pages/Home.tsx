@@ -185,6 +185,27 @@ export default function Home() {
                 </Button>
               </div>
 
+              {/* Icon row */}
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <Card className="hover-scale report-glass">
+                  <CardHeader className="flex-row items-center gap-3">
+                    <MessageCircle className="h-5 w-5 text-slate-700" aria-hidden />
+                    <CardTitle className="text-base text-slate-800">WhatsApp Communication</CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card className="hover-scale report-glass">
+                  <CardHeader className="flex-row items-center gap-3">
+                    <FileText className="h-5 w-5 text-slate-700" aria-hidden />
+                    <CardTitle className="text-base text-slate-800">Digital Terms via WhatsApp</CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card className="hover-scale report-glass">
+                  <CardHeader className="flex-row items-center gap-3">
+                    <ShieldCheck className="h-5 w-5 text-slate-700" aria-hidden />
+                    <CardTitle className="text-base text-slate-800">Easy & Secure for Clinicians</CardTitle>
+                  </CardHeader>
+                </Card>
+              </div>
             </div>
 
             {/* Hero visual */}
