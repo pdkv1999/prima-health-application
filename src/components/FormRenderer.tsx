@@ -61,7 +61,18 @@ const voiceAllowlist: Record<"stage1" | "stage2" | "stage3", string[]> = {
   ],
 };
 const shouldShowVoice = (stage: "stage1" | "stage2" | "stage3", key: string, type?: string) => {
-  return type === "textarea" && voiceAllowlist[stage]?.includes(key);
+  if (type === "textarea" && voiceAllowlist[stage]?.includes(key)) {
+    return true;
+  }
+  // Handle criteria9 notes fields (e.g., "inattention.0.notes", "hyperimpulsivity.0.notes")
+  if (type === "textarea" && key.includes(".") && key.endsWith(".notes")) {
+    return true;
+  }
+  // Handle table notes columns
+  if (type === "textarea" && (key.includes("notes") || key.endsWith(".notes"))) {
+    return true;
+  }
+  return false;
 };
 const isEmptyVal = (val: any) => {
   if (val == null) return true;
