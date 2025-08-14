@@ -404,7 +404,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
                     </td>
                     <td className="p-2">
                       <div className="grid gap-1">
-                        <Input
+                        <Textarea
                           value={row.notes || ""}
                           onChange={(e) => {
                             const next = rows.slice();
@@ -412,6 +412,15 @@ export function FormRenderer({ stageKey, sections }: Props) {
                             setVal(field.key, next);
                           }}
                         />
+                        {shouldShowVoice(stageKey, `${field.key}.${idx}.notes`, "textarea") && (
+                          <VoiceInputButton 
+                            onResult={(text) => {
+                              const next = rows.slice();
+                              next[idx] = { ...row, notes: text };
+                              setVal(field.key, next);
+                            }} 
+                          />
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -443,7 +452,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
                   <div className="mt-2">
                     <Label>Notes</Label>
                     <Textarea value={entry.notes || ""} onChange={(e) => setEntry({ notes: e.currentTarget.value })} />
-                    {shouldShowVoice(stageKey, `${field.key}.notes`, "textarea") && (
+                    {shouldShowVoice(stageKey, `${field.key}.${idx}.notes`, "textarea") && (
                       <VoiceInputButton onResult={(t) => setEntry({ notes: t })} />
                     )}
                   </div>
