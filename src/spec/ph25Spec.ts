@@ -481,7 +481,7 @@ html: `
   .bold { font-weight:700; }
   .hr { border:0; border-top:2px solid #111; margin:20px 0; }
   .two-col { display:grid; gap:24px; }
-  h2 { font-size:18px; margin:18px 0 8px; font-weight:700; }
+  h2 { font-size:18px; margin:18px 0 8px; font-weight:700 !important; }
   ol { padding-left:1.25rem; }
   table { width:100%; border-collapse:collapse; }
   th, td { border:1px solid #e5e7eb; padding:8px; font-size:14px; }
