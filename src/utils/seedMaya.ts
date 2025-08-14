@@ -20,45 +20,54 @@ function toISO(d: string) {
 
 export function getMayaSeed(currentReport?: any): MayaSeed {
   const meta = {
-    refNumber: "PH25-0001",
-    gpName: "Dr. Sarah O'Brien",
-    gpAddress:
-      "Esculap Medical Centre,\nBallincollig Primary Care Centre,\n55 Old Fort Road,\nBallincollig,\nCork, P31 XN96",
-    clientName: "Alex Morgan",
-    clientAddress: "71 An Caislean Drive,\nBallincollig, Co. Cork",
-    dob: toISO("22.06.14"),
-    guardianName: "Natalia Morgan",
-    contactNumber: "+353 87 123 4567",
-    assessmentDate: toISO("09.04.25"),
-    assessmentTime: "14:30",
-    assessmentLocation: "Western Gateway Building, Cork",
-    careManager: "Dr. Michael Kelly",
+    refNumber: "PH25 - 317",
+    gpName: "Dr. Aanya Sharma",
+    gpAddress: `Lotus Medical Centre
+Greenfield Primary Care Centre
+55 Park Street
+Bengaluru
+560001`,
+    clientName: "Aarav Singh",
+    clientAddress: `71 MG Road, Bengaluru, Karnataka`,
+    dob: toISO("17.09.13"),
+    guardianName: "Isha Singh",
+    contactNumber: "+91 98123-45678",
+    assessmentDate: toISO("14.08.24"),
+    assessmentTime: "10:00",
+    assessmentLocation: "PrimaHealth Clinic, Bengaluru",
+    careManager: "Dr. Kabir Das",
   };
 
   const stage1 = {
     ...meta,
     handedness: "right",
     age: "10 years, 11 months",
-    schoolYear: "4th class",
-    school: "Scoil Mhuire Ballincollig",
-    referralBackground:
-      "Alex’s difficulties with attention, organization, hyperactivity and emotional regulation have become concerning for the family and have had a significant impact on her engagement and performance in school. Concerns have been noted by both Alex’s parents and teachers, prompting the family to seek an assessment to better understand her difficulties. Her teacher specifically raised concerns around a possible ADHD and/or dyslexia.",
-    medicalHistory:
-      "1. Migraines - She has had no recent migraines; however, the onset of migraines were severe from the age of three and a half that resulted in vomiting and subsequent input through Dr. ABC, Consultant Paediatric Neurologist.\n2. History of low iron",
-    medications: "1. Iburpofen PRN\n2. Triptan PRN",
+    schoolYear: "Class 4",
+    school: "Vidya Mandir Bengaluru",
+    referralBackground: `Thank you for referring Aarav (right-handed, 10 years, 11 months, currently in Class 4 at Vidya Mandir Bengaluru) for an ADHD assessment. The referral was initiated following concerns expressed both by Aarav’s parents and his class teacher about persistent difficulties with attention, organisation, and regulation of activity level. These difficulties have been observed across home and school environments for over two academic years.
+
+An initial telephone intake was conducted on 09.04.25 with both parents present, followed by a clinical evaluation with Aarav and his mother on 07.05.25. A comprehensive cognitive assessment was completed by Dr. Raj Verma (Senior Educational Psychologist) on 12.05.25, with results reviewed jointly on 20.05.25. The assessment process included direct observation, structured interviews, behavioural questionnaires (Conners-4), and collateral input from school staff.`,
+    medicalHistory: `Pregnancy & Birth: Aarav was born full-term via spontaneous vaginal delivery, weighing approximately 3 kg. There were no antenatal complications, and his mother reported no tobacco, alcohol, or illicit drug use during pregnancy. No postnatal complications were recorded.
+Early Development: Milestones were achieved early — walked at 10 months, first words before 12 months, and short sentences by 18 months. There were no gross or fine motor coordination concerns. Toilet training was achieved within the expected timeframe, and no regression in skills has been noted.
+Medical Conditions:
+• Migraines: Onset around 3.5 years old, initially severe with vomiting, but markedly improved in the last two years. Managed under paediatric neurology review (Dr. Meera Nair).
+• Iron deficiency: Documented in early childhood; requires ongoing supplementation.
+• Allergies: No known drug allergies.
+Medications:
+• Ibuprofen PRN for headaches.
+• Triptan PRN for migraines.`,
+    medications: `Ibuprofen PRN for headaches.
+Triptan PRN for migraines.`,
     surgicalHistory: "None",
     allergies: "No known drug allergies",
-    forensicHistory: "No known family history.",
-    // Family history long text stored here; can be split later if needed
-    otherFamilyDetails:
-      "The family moved from Poland to Ireland in 2011. Alex is the eldest of three girls. Her younger sisters are Sofia (7) and Lucia (2). Her mother Natalia (36) has a history of depression and anxiety and was recently diagnosed with ADHD. Natalia also has a history of iron deficiency. She is currently working part-time one day a week as a receptionist in a beautician. There is a positive family history of anaphylaxis. A maternal uncle is suspected of being dyslexic but not formally diagnosed. The maternal grandfather passed away secondary to cancer and the maternal grandmother has a known history of thyroid issues. Alex’s father, Jacek (39), works part-time as a chef in a hotel. The paternal grandfather passed away secondary to cancer. The paternal grandmother is alive and working in Germany.",
-    antenatalDetails:
-      "There is no reported use of prescribed medicines, cigarettes or alcohol during the pregnancy. Overall this was an uneventful pregnancy.",
-    deliveryDetails:
-      "She was born at full-term via normal delivery, weighing approximately 3 kg.",
-    postpartumDetails: "No postnatal complications were reported.",
-    developmentalMilestones:
-      "She reached her milestones well before the expected timeframe. She walked at 10 months of age and was telling stories before the age of two. There are no reported issues around motor coordination. There were no issues with toilet training.",
+    forensicHistory: "No forensic history documented.",
+    householdComposition: `The Singh family relocated from northern India to Bengaluru in 2011. Aarav is the eldest of three boys: Rohan (7) and Kabir (2). His mother, Isha (36), works part-time as a receptionist in a wellness clinic and was recently diagnosed with ADHD, alongside a history of depression and anxiety. She also has a history of iron deficiency.
+His father, Vihaan (39), works part-time as a chef in a hotel. There is a notable family history of cancer on both maternal and paternal sides, and a suspected (but undiagnosed) dyslexia in a maternal uncle. Maternal grandmother has hypothyroidism.
+Home environment is stable, though the family reports challenges in managing routines and discipline given the competing demands of three young children.`,
+    antenatalDetails: `There is no reported use of prescribed medicines, cigarettes or alcohol during the pregnancy. Overall this was an uneventful pregnancy.`,
+    deliveryDetails: `Spontaneous vaginal delivery at full term, birth weight approximately 3 kg.`,
+    postpartumDetails: `No postnatal complications were reported.`,
+    developmentalMilestones: `Milestones achieved early: walked at 10 months, first words before 12 months, short sentences by 18 months. No motor coordination concerns; toilet training within expected timeframe.`,
   } as any;
 
   const stage2 = {
@@ -71,13 +80,13 @@ export function getMayaSeed(currentReport?: any): MayaSeed {
     guardian_name: meta.guardianName,
     contact_number: meta.contactNumber,
     assessment_date: toISO("07.05.25"),
-    assessment_time: "14:30",
-    location_method: "In-person at Western Gateway Building (14:30 – PrimaHealth Office)",
+    assessment_time: "10:00",
+    location_method: "In-person at PrimaHealth Clinic, Bengaluru",
     careManager: meta.careManager,
     previous_reminders: "Bring school reports, Conners rating scales, and any recent medical reports. Discuss iron supplementation compliance.",
     present: "Both",
     present_other: "",
-    intro_notes: "Alex appeared initially shy but warmed up throughout the session. Both parents present and highly engaged. Brought completed Conners rating scales and recent school report as requested.",
+    intro_notes: "Both parents present and highly engaged. Brought completed Conners-4 rating scales and recent school report as requested.",
     mse: [
       { task: "Months of the Year Backwards", yes: false, no: true, notes: "Struggled significantly, could only manage 3 months backwards" },
       { task: "Serial Threes", yes: false, no: true, notes: "Required multiple prompts, lost track after 97, 94" },
@@ -85,11 +94,12 @@ export function getMayaSeed(currentReport?: any): MayaSeed {
       { task: "Digit Span Reverse", yes: false, no: true, notes: "Maximum 3 digits backwards, shows working memory difficulties" },
       { task: "Verbal 'A' Test", yes: false, no: true, notes: "Generated only 8 words in 60 seconds, below expected for age" }
     ],
-    mental_state_notes: "Overall MSE suggests attention and working memory difficulties consistent with ADHD presentation. Alex became frustrated with serial tasks but persevered with encouragement.",
+    mental_state_notes: `During clinic observation, Aarav presented as an alert and engaging child, with noticeable restlessness. He frequently shifted posture, tapped his feet, and manipulated objects in his hands. At times, he appeared to attempt self-regulation by sitting on his hands, though leg movements continued.
+Aarav was able to articulate his thoughts well and maintained appropriate eye contact intermittently. Notably, he demonstrated a tendency to avert gaze during verbal instructions, which he reported helped him “listen better” by reducing distractions. His mother confirmed this strategy was common at home.`,
     inattention: [
       { freq: "Often", impact: "Severe", other: "Academic", criteria: true, notes: "Makes frequent careless errors in maths, struggles to check work" },
       { freq: "Often", impact: "Severe", other: "Academic", criteria: true, notes: "Cannot sustain attention during lessons, particularly maths and reading" },
-      { freq: "Often", impact: "Moderate", other: "Social", criteria: true, notes: "Parents report she often appears not to listen when spoken to directly" },
+      { freq: "Often", impact: "Moderate", other: "Social", criteria: true, notes: "Often appears not to listen when spoken to directly" },
       { freq: "Often", impact: "Severe", other: "Academic", criteria: true, notes: "Frequently fails to complete homework assignments, starts but doesn't finish" },
       { freq: "Often", impact: "Severe", other: "Academic", criteria: true, notes: "Significant difficulty organizing school materials and homework schedule" },
       { freq: "Often", impact: "Severe", other: "Academic", criteria: true, notes: "Avoids and procrastinates homework, particularly tasks requiring sustained effort" },
@@ -108,117 +118,138 @@ export function getMayaSeed(currentReport?: any): MayaSeed {
       { freq: "Often", impact: "Moderate", other: "Social", criteria: true, notes: "Struggles to wait turn in games, conversations, activities" },
       { freq: "Often", impact: "Moderate", other: "Social", criteria: true, notes: "Frequently interrupts siblings and parents during conversations" }
     ],
-    other_difficulties: "Sleep difficulties - takes long time to fall asleep, mind appears to 'race' at bedtime. Emotional regulation challenges, becomes easily overwhelmed and tearful when frustrated. Perfectionist tendencies leading to avoidance of tasks.",
-    comorbidities: "Possible anxiety disorder - separation anxiety noted, perfectionist traits, worry about academic performance. Sleep disorder requires investigation. Consider assessment for specific learning difficulties in mathematics.",
-    other_notes: "Alex showed good rapport throughout assessment. Parents very supportive and understanding. School report confirms attention difficulties across multiple academic subjects. Conners rating scales completed by parents and teacher show elevated scores for inattention subscales.",
+    other_difficulties: "Sleep onset difficulties; emotional regulation challenges with frustration; occasional explosive reactions to perceived injustices.",
+    comorbidities: "Mild anxiety features; sleep-wake dysregulation; consider assessment for specific learning difficulties.",
+    other_notes: `Academic: difficulty sustaining attention during reading/writing; rushes work causing errors; disorganisation (messy bag/desk; lost items). 
+Home: requires multiple reminders; easily distracted during meals; interrupts conversations. 
+Social: well-liked but may disrupt group activities due to excessive talking; gets bored quickly. 
+Emotional/Behavioural: occasional explosive reactions; hoards trivial objects citing 'memories'; sleep onset 2–3 hours.`,
     preliminary_summary: "ADHD Combined Presentation (DSM-5)",
     ot: "No",
     ot_details: "",
     slt: "No", 
     slt_details: "",
     cognitive: "Yes",
-    cognitive_details: "Educational psychology assessment recommended to assess for specific learning difficulties, particularly in mathematics and reading comprehension",
+    cognitive_details: `Conners-4 (summary):
+Informant	ADHD-I	ADHD-II	ODD	CD	Probability Score
+Self	4/9	1/9	2/8	0/15	28%
+Parent	9/9	8/9	6/8	3/15	99%
+Teacher	8/9	3/9	0/8	0/13	94%
+
+Consistent pattern of inattentive and hyperactive-impulsive behaviours across settings.`,
     other: "Yes",
-    other_details: "Sleep study referral if sleep difficulties persist. Consider paediatric psychology for anxiety management strategies",
+    other_details: "Consider paediatric psychology for anxiety management strategies.",
     next_session_type: "Final assessment and feedback session",
-    other_details_ns: "Provide interim strategies for home and school. Liaise with school regarding reasonable adjustments pending formal diagnosis.",
-    careManager_reminders: "Confirm Conners scales scores, review school accommodations already in place, prepare comprehensive management recommendations",
-    personal_info: "Alex loves art and creative activities, particularly drawing and painting. Strong interest in animals, especially horses. Enjoys swimming and is learning piano.",
-    additional_notes: "Family very engaged in process. Alex expressed relief at having someone understand her difficulties. Parents keen to implement strategies immediately.",
+    other_details_ns: "Provide interim strategies for home and school; liaise with school on adjustments.",
+    careManager_reminders: "Confirm Conners scores; review school accommodations; prepare management recommendations.",
+    personal_info: "Enjoys drawing, building with blocks, swimming, and story audiobooks.",
+    additional_notes: "Family highly engaged; parents keen to implement strategies.",
     diagnostic_outcome: "ADHD Combined Presentation (DSM-5)"
   } as any;
 
   const stage3 = {
     assessment_date: toISO("20.05.25"),
     assessment_time: "",
-    location_method: "In-person – same office",
+    location_method: "In-person – PrimaHealth Clinic, Bengaluru",
     client_name_cc: meta.clientName,
-    additional_doctors:
-      "Dr. ABC, Consultant Paediatric Neurologist, City Hospital\nPaediatric Cardiology Dept, City Hospital",
+    additional_doctors: `Dr. Meera Nair, Consultant Paediatric Neurologist, Sunrise Hospital, Anna Salai, Chennai
+Paediatric Cardiology Dept, Sunrise Hospital, Anna Salai, Chennai`,
     diagnosis: [
-      "Attention-Deficit Hyperactivity Disorder Combined Presentation (DSM - 5)",
+      "Attention-Deficit Hyperactivity Disorder Combined Presentation (DSM-5)",
     ],
     criteria: [
       "Criterion A: >6/9 symptoms in inattention and/or hyperactivity/impulsivity.",
-      "Criterion B: Symptoms were present before age 7.",
+      "Criterion B: Symptoms were present before age 12.",
       "Criterion C: Criteria are met in two or more settings.",
       "Criterion D: The symptoms are causing impairment in social, academic, and home life.",
-      "Criterion E (Consideration of other disorders/difficulties): Co-occurring difficulties were considered in the client’s presentation.",
+      "Criterion E: Co-occurring difficulties considered; sleep/anxiety monitored.",
     ],
+    recommendations: `Medical:
+• Consider a trial of stimulant medication under close monitoring for migraine exacerbation.
+• Continue iron supplementation and monitor ferritin levels quarterly.
+Educational:
+• Preferential classroom seating away from high-traffic areas.
+• Allow for movement breaks every 20–30 minutes.
+• Use visual schedules and checklists for organisation.
+Behavioural:
+• Implement a home “launch pad” area for essential school items.
+• Use object trackers (“Tiles”) for frequently misplaced items.
+• Consistent positive reinforcement for task completion.
+Sleep:
+• Introduce a calming bedtime routine, use of white noise or audiobooks.
+• Reduce screen exposure at least 60 minutes before bedtime.`,
+    aftercare_details: `Review in 8 weeks to assess effectiveness of school strategies and consider initiation of medication if impairment persists. Parents encouraged to liaise with ADHD India Support Group.`,
+    additional_notes_final: `Regards,
+
+Dr. Kabir Das
+Clinical Director, Consultant Child & Adolescent Psychiatrist
+B.Sc (Pharm) MB BCh BAO Dip Clin Leadership MCPsychI MRCPsych`,
   } as any;
 
   const reportPatch = {
-    date: "July 2nd, 2025",
+    date: "14 August 2024",
     diagnosis_list: [
-      "Attention-Deficit Hyperactivity Disorder Combined Presentation (DSM - 5)",
+      "Attention-Deficit Hyperactivity Disorder Combined Presentation (DSM-5)",
     ],
     plan_dx: [
-      "Diagnosis of ADHD Combined Presentation confirmed (20.05.2025)",
-      "Letter provided for school with comprehensive practical recommendations",
-      "Individual Education Plan (IEP) meeting recommended with school",
-      "Ensure regular iron supplementation compliance (aim for Serum Ferritin > 50ng/mL)",
-      "Recommend trial of ADHD medication treatment - stimulant medication first-line",
-      "Educational psychology assessment to assess for specific learning difficulties",
-      "Consider occupational therapy assessment if fine motor difficulties persist",
-      "Recommend ADHD Ireland Support Group and Parent Training Programme",
-      "Recommend daily Omega-3 fish oils 1000mg daily (moderate level of evidence for ADHD)",
-      "Establish consistent sleep routine and sleep hygiene measures",
-      "3-month follow-up appointment for progress monitoring"
+      "ADHD diagnosis confirmed.",
+      "Written recommendations for school provided, focusing on classroom strategies and individual support.",
+      "Maintain regular iron supplementation (target serum ferritin > 50 ng/mL).",
+      "Recommend a monitored trial of ADHD medication if behavioural strategies are insufficient.",
+      "Suggest family participation in ADHD India Support Group and Parent Education Programme.",
+      "Daily Omega-3 supplementation (evidence-based moderate support for ADHD)."
     ],
-    referralBackground: stage1.referralBackground,
-    medicalHistory: stage1.medicalHistory,
-    medications: stage1.medications,
-    surgicalHistory: stage1.surgicalHistory,
-    allergies: stage1.allergies,
-    familyHistory: stage1.otherFamilyDetails,
-    familyMedicalHistory: stage1.familyMedicalHistory,
-    familyMentalHealth: stage1.familyMentalHealth,
-    familyLearningDifficulties: stage1.familyLearningDifficulties,
-    forensicHistory: stage1.forensicHistory,
-    substanceHistory: stage1.substanceHistory,
-    antenatalDetails: stage1.antenatalDetails,
-    deliveryDetails: stage1.deliveryDetails,
-    postpartumDetails: stage1.postpartumDetails,
-    developmentalMilestones: stage1.developmentalMilestones,
-    householdComposition: stage1.householdComposition,
-    assessmentFindings: "Comprehensive assessment conducted over three sessions revealed significant attention difficulties consistent with ADHD Combined Presentation. Working memory deficits noted on MSE tasks. Both inattentive and hyperactive-impulsive symptoms present with substantial impairment across home and school settings.",
-    mseFindings: "Mental State Examination revealed difficulties with working memory tasks (digit span reverse max 3), serial cognitive tasks (serial threes), and verbal fluency (A words: 11/minute, below age norms). Attention and concentration difficulties evident throughout assessment.",
-    inattentionFindings: "All 9 DSM-5 inattention criteria met with severe impairment noted in academic settings. Particular difficulties with sustained attention, task completion, organization, and following through on instructions.",
-    hyperactivityFindings: "5/9 DSM-5 hyperactivity-impulsivity criteria met. Mainly internal restlessness, impulsive verbal responses, difficulty waiting turn, and interrupting others. Less overt hyperactivity than typical presentation.",
-    comorbidFindings: "Mild anxiety symptoms likely secondary to ADHD and academic struggles. Sleep difficulties with delayed sleep onset. No evidence of mood disorder, autism spectrum disorder, or primary anxiety disorder.",
-    functionalImpact: "Significant functional impairment noted across multiple domains: academic performance declining, homework battles at home, peer relationship difficulties due to impulsive behaviours, and family stress around daily routines and school performance.",
-    schoolImpact: "Teacher reports significant attention difficulties during lessons, incomplete work, difficulty following multi-step instructions, frequent loss of materials, and calling out without permission. Academic performance below potential particularly in mathematics and reading comprehension.",
-    homeImpact: "Parents report daily challenges with homework completion, morning and bedtime routines, chore completion, and sibling interactions. Alex becomes easily overwhelmed and tearful when frustrated with tasks.",
+    referralBackground: (stage1 as any).referralBackground,
+    medicalHistory: (stage1 as any).medicalHistory,
+    medications: (stage1 as any).medications,
+    surgicalHistory: (stage1 as any).surgicalHistory,
+    allergies: (stage1 as any).allergies,
+    familyHistory: (stage1 as any).otherFamilyDetails,
+    familyMedicalHistory: (stage1 as any).familyMedicalHistory,
+    familyMentalHealth: (stage1 as any).familyMentalHealth,
+    familyLearningDifficulties: (stage1 as any).familyLearningDifficulties,
+    forensicHistory: (stage1 as any).forensicHistory,
+    substanceHistory: (stage1 as any).substanceHistory,
+    antenatalDetails: (stage1 as any).antenatalDetails,
+    deliveryDetails: (stage1 as any).deliveryDetails,
+    postpartumDetails: (stage1 as any).postpartumDetails,
+    developmentalMilestones: (stage1 as any).developmentalMilestones,
+    householdComposition: (stage1 as any).householdComposition,
+    assessmentFindings: "Findings consistent with ADHD Combined Presentation with notable inattentive symptoms and working memory weaknesses.",
+    mseFindings: "MSE shows difficulties with reverse digit span, serial tasks, and verbal fluency; attention and concentration difficulties sustained across assessment.",
+    inattentionFindings: "All 9 DSM-5 inattention criteria met with significant impairment in academic settings.",
+    hyperactivityFindings: "Hyperactivity-impulsivity symptoms present; internal restlessness prominent; interrupts and struggles to wait turn.",
+    comorbidFindings: "Mild anxiety features and delayed sleep onset; no evidence of mood disorder or ASD.",
+    functionalImpact: "Functional impairment across academic, social, and home domains; disorganisation and task persistence are key barriers.",
+    schoolImpact: "Teacher reports incomplete work, difficulty following multi-step instructions, frequent loss of materials, and calling out.",
+    homeImpact: "Parents report daily challenges with routines, homework, and sibling interactions.",
     conners_table: {
-      self: { adhd_i: "4/9", adhd_ii: "2/9", odd: "1/8", cd: "0/15", prob: "65%" },
-      parent: { adhd_i: "9/9", adhd_ii: "5/9", odd: "3/8", cd: "1/15", prob: "98%" },
-      teacher: { adhd_i: "9/9", adhd_ii: "3/9", odd: "2/8", cd: "0/15", prob: "96%" },
+      self: { adhd_i: "4/9", adhd_ii: "1/9", odd: "2/8", cd: "0/15", prob: "28%" },
+      parent: { adhd_i: "9/9", adhd_ii: "8/9", odd: "6/8", cd: "3/15", prob: "99%" },
+      teacher: { adhd_i: "8/9", adhd_ii: "3/9", odd: "0/8", cd: "0/13", prob: "94%" },
     },
     recommendations_immediate: [
-      "Implement daily visual schedule and routine charts at home",
-      "Break tasks into smaller, manageable steps",
-      "Provide frequent positive reinforcement and praise for effort",
-      "Establish quiet, organized study space free from distractions",
-      "Use timer for homework sessions (15-20 minute intervals with breaks)"
+      "Implement daily visual schedules and routine charts at home",
+      "Break tasks into smaller steps with timers (15–20 minute work blocks)",
+      "Provide frequent positive reinforcement",
+      "Establish quiet, organized study space free from distractions"
     ],
     recommendations_school: [
-      "Preferential seating away from distractions (front of class, away from high-traffic areas)",
-      "Extended time for tests and assignments (1.5x time allowance)",
+      "Preferential seating away from distractions",
+      "Extended time for tests and assignments (1.5x)",
       "Frequent check-ins and prompts to maintain attention",
-      "Break large assignments into smaller components with interim deadlines", 
-      "Permission to fidget with stress ball or fidget tool during lessons",
-      "Daily communication book between home and school",
-      "Movement breaks every 20-30 minutes during focused work"
+      "Break large assignments into smaller components with interim deadlines",
+      "Permission to use a fidget tool",
+      "Movement breaks every 20–30 minutes"
     ],
     recommendations_longterm: [
       "Medication assessment and trial with paediatric psychiatrist",
       "Educational psychology assessment for learning difficulties",
-      "Social skills training group if peer difficulties persist",
-      "Family therapy to develop coping strategies and reduce stress",
-      "Regular review and adjustment of interventions based on progress"
+      "Social skills group if peer difficulties persist",
+      "Regular review and adjustment of interventions"
     ],
-    prognosis: "With appropriate multimodal treatment including educational accommodations, behavioural interventions, and consideration of medication, Alex's prognosis is good. Early identification and intervention are positive prognostic factors. Continued family and school support will be crucial for optimal outcomes.",
-    followUp: "3-month follow-up appointment scheduled to review progress with interventions, assess need for medication, and monitor overall functioning. Interim contact available if concerns arise."
+    prognosis: "With multimodal treatment and supports, prognosis is good; early intervention and family/school engagement are positive factors.",
+    followUp: "Follow up in 8 weeks to review progress, consider medication initiation, and monitor overall functioning.",
   } as any;
 
   return { meta, stage1, stage2, stage3, reportPatch };
