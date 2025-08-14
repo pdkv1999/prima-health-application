@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useCaseStore } from "@/store/useCaseStore";
 import { ph25Spec } from "@/spec/ph25Spec";
 import { renderTemplate } from "@/utils/template";
-import { getMayaSeed } from "@/utils/seedMaya";
+import { handleReportClick } from "@/utils/navigation";
+import { reportBindings } from "@/store/reportBindings";
+import { reportTemplate } from "@/utils/reportTemplate";
 
 export default function Report() {
   const meta = useCaseStore((s) => s.meta)
@@ -20,11 +23,11 @@ export default function Report() {
   // - htmlHighlighted: used in on-screen editing/review (shows subtle yellow highlight)
   // - cleanHtml: used for preview/send/save (no highlight)
   const htmlHighlighted = useMemo(
-    () => renderTemplate(ph25Spec.report_template.html, data, { highlightDynamic: true }),
+    () => renderTemplate(reportTemplate, data, { highlightDynamic: true }),
     [data]
   );
   const cleanHtml = useMemo(
-    () => renderTemplate(ph25Spec.report_template.html, data, { highlightDynamic: false }).replace(/\n/g, ""),
+    () => renderTemplate(reportTemplate, data, { highlightDynamic: false }).replace(/\n/g, ""),
     [data]
   );
 
@@ -58,22 +61,34 @@ export default function Report() {
   };
 
   useEffect(() => {
-    // Global function for stage navigation
-    (window as any).navigateToField = (fieldPath: string) => {
-      const [stage, field] = fieldPath.split('.');
-      const stageRoutes = { stage1: '/stage1', stage2: '/stage2', stage3: '/stage3' };
-      if (stageRoutes[stage as keyof typeof stageRoutes]) {
-        window.location.href = stageRoutes[stage as keyof typeof stageRoutes];
+    // Setup click handlers for report highlights
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const bindingId = target.getAttribute('data-bind');
+      if (bindingId) {
+        handleReportClick(bindingId);
       }
     };
+
+    document.addEventListener('click', handleClick);
     
-    // Auto-populate with demo data if empty
-    const currentData = useCaseStore.getState();
-    if (!currentData.stage1?.clientName) {
-      const seed = getMayaSeed();
-      bulkSet(seed);
+    // Scroll to anchor if present
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          element.classList.add('report-highlight-pulse');
+          setTimeout(() => element.classList.remove('report-highlight-pulse'), 2000);
+        }
+      }, 100);
     }
-  }, [bulkSet]);
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, []);
 
   return (
     <div className="apple-bg min-h-screen">

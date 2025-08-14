@@ -1,6 +1,7 @@
 import { ph25Spec } from "@/spec/ph25Spec";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { dummyData } from "@/utils/dummyData";
 
 export type StageKey = "stage1" | "stage2" | "stage3";
 
@@ -20,6 +21,8 @@ export type CaseStore = CaseState & {
   exportJSON: () => string;
   validateRequired: () => { ok: boolean; missing: string[] };
   getStageProgress: (stage: StageKey) => "Not Started" | "In Progress" | "Complete";
+  loadDummyData: () => void;
+  navigateToField: (fieldPath: string) => void;
 };
 
 function getByPath(obj: any, path: string) {
@@ -47,12 +50,12 @@ function isEmpty(val: any) {
 }
 
 const initial: CaseState = {
-  meta: deepClone(ph25Spec.report_template.initial_state.meta),
-  stage1: deepClone(ph25Spec.report_template.initial_state.stage1),
-  stage2: deepClone(ph25Spec.report_template.initial_state.stage2),
-  stage3: deepClone(ph25Spec.report_template.initial_state.stage3),
-  report: deepClone(ph25Spec.report_template.initial_state.report),
-  hourlyRate: ph25Spec.home.hourly_rate_default_eur,
+  meta: deepClone(dummyData.meta),
+  stage1: deepClone(dummyData.stage1),
+  stage2: deepClone(dummyData.stage2),
+  stage3: deepClone(dummyData.stage3),
+  report: deepClone(dummyData.report),
+  hourlyRate: dummyData.hourlyRate,
 };
 
 function applyPrepopulateRules(state: CaseState, changedPath: string) {
@@ -129,6 +132,23 @@ export const useCaseStore = create<CaseStore>()(
         if (values.length === 0) return "Not Started";
         if (values.length < required.length) return "In Progress";
         return "Complete";
+      },
+      loadDummyData: () => {
+        set(deepClone(dummyData));
+      },
+      navigateToField: (fieldPath: string) => {
+        const [stage, field] = fieldPath.split('.');
+        const stageRoutes = { 
+          stage1: '/stage1', 
+          stage2: '/stage2', 
+          stage3: '/stage3' 
+        };
+        
+        if (stageRoutes[stage as keyof typeof stageRoutes]) {
+          // Store the field to focus on
+          localStorage.setItem('focusField', field);
+          window.location.href = stageRoutes[stage as keyof typeof stageRoutes];
+        }
       },
     }),
     {

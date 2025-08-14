@@ -106,7 +106,11 @@ export default function Stage1() {
               });
               return;
             }
-            navigate("/stage2");
+    toast({
+      title: "Saved",
+      description: "Stage 1 completed. Report updated.",
+    });
+    navigate("/stage2");
           }}
           className="glass-button text-slate-700 font-medium px-6 py-3"
         >

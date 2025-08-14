@@ -8,6 +8,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useCaseStore } from "@/store/useCaseStore";
+import { focusField, returnToReport } from "@/utils/navigation";
+import { reportBindings } from "@/store/reportBindings";
 
 import { VoiceInputButton } from "@/components/VoiceInputButton";
 
@@ -96,6 +98,15 @@ type Props = {
 export function FormRenderer({ stageKey, sections }: Props) {
   const state = useCaseStore((s) => s[stageKey]);
   const updateField = useCaseStore((s) => s.updateField);
+
+  // Auto-focus field if coming from report
+  React.useEffect(() => {
+    const focusFieldKey = localStorage.getItem('focusField');
+    if (focusFieldKey) {
+      focusField(focusFieldKey);
+      localStorage.removeItem('focusField');
+    }
+  }, []);
 
   function getVal(key: string) {
     return state?.[key];
@@ -478,10 +489,27 @@ export function FormRenderer({ stageKey, sections }: Props) {
             <div className="form-section">
               {(section.fields || []).map((f: any) => {
                 const isFullWidth = f.type === "textarea" || f.type === "group" || f.type === "table" || f.type === "criteria9";
+                // Find report binding for this field
+                const binding = reportBindings.find(b => b.path === `${stageKey}.${f.key}`);
+                
                 return (
                   <div key={f.key || f.title} className={cn("form-group", isFullWidth && "full-width")}>
-                    {f.label && <Label className="font-medium text-sm text-muted-foreground mb-2">{f.label}</Label>}
-                    {renderSimpleField(f)}
+                    {f.label && (
+                      <div className="flex items-center justify-between mb-2">
+                        <Label className="font-medium text-sm text-muted-foreground">{f.label}</Label>
+                        {binding && (
+                          <button
+                            onClick={() => returnToReport(binding.id)}
+                            className="text-xs text-blue-600 hover:text-blue-800 underline"
+                          >
+                            View in report
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    <div id={`field-${f.key}`} data-field={f.key}>
+                      {renderSimpleField(f)}
+                    </div>
                   </div>
                 );
               })}

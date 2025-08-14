@@ -119,6 +119,35 @@
   }
 }
 
+/* Report highlighting styles */
+.autofill-highlight {
+  background-color: rgba(255, 235, 59, 0.2) !important;
+  padding: 1px 3px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.autofill-highlight:hover {
+  background-color: rgba(255, 235, 59, 0.4) !important;
+}
+
+.field-highlight {
+  outline: 2px solid hsl(var(--primary)) !important;
+  outline-offset: 2px;
+  background-color: rgba(255, 235, 59, 0.1) !important;
+  transition: all 0.3s ease;
+}
+
+.report-highlight-pulse {
+  animation: pulse-highlight 2s ease-in-out;
+}
+
+@keyframes pulse-highlight {
+  0%, 100% { background-color: transparent; }
+  50% { background-color: rgba(255, 235, 59, 0.3); }
+}
+
 /* Clinical Form Components */
 @layer components {
   .form-container {
