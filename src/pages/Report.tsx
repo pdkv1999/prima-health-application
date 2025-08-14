@@ -8,7 +8,6 @@ import { ph25Spec } from "@/spec/ph25Spec";
 import { renderTemplate } from "@/utils/template";
 import { handleReportClick } from "@/utils/navigation";
 import { reportBindings } from "@/store/reportBindings";
-import { reportTemplate } from "@/utils/reportTemplate";
 import { CompletenessValidator } from "@/components/CompletenessValidator";
 import { sendEncryptedEmail } from "@/utils/emailService";
 
@@ -26,11 +25,11 @@ export default function Report() {
   // - htmlHighlighted: used in on-screen editing/review (shows subtle yellow highlight)
   // - cleanHtml: used for preview/send/save (no highlight)
   const htmlHighlighted = useMemo(
-    () => renderTemplate(reportTemplate, data, { highlightDynamic: true }),
+    () => renderTemplate(ph25Spec.report_template.html, data, { highlightDynamic: true }),
     [data]
   );
   const cleanHtml = useMemo(
-    () => renderTemplate(reportTemplate, data, { highlightDynamic: false }).replace(/\n/g, ""),
+    () => renderTemplate(ph25Spec.report_template.html, data, { highlightDynamic: false }).replace(/\n/g, ""),
     [data]
   );
 

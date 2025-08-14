@@ -491,24 +491,9 @@ export function FormRenderer({ stageKey, sections }: Props) {
             <div className="form-section">
               {(section.fields || []).map((f: any) => {
                 const isFullWidth = f.type === "textarea" || f.type === "group" || f.type === "table" || f.type === "criteria9";
-                // Find report binding for this field
-                const binding = reportBindings.find(b => b.path === `${stageKey}.${f.key}`);
-                
                 return (
                   <div key={f.key || f.title} className={cn("form-group", isFullWidth && "full-width")}>
-                    {f.label && (
-                      <div className="flex items-center justify-between mb-2">
-                        <Label className="font-medium text-sm text-muted-foreground">{f.label}</Label>
-                        {binding && (
-                          <button
-                            onClick={() => returnToReport(binding.id)}
-                            className="text-xs text-blue-600 hover:text-blue-800 underline"
-                          >
-                            View in report
-                          </button>
-                        )}
-                      </div>
-                    )}
+                    {f.label && <Label className="font-medium text-sm text-muted-foreground mb-2">{f.label}</Label>}
                     <div id={`field-${f.key}`} data-field={f.key}>
                       {renderSimpleField(f)}
                     </div>
