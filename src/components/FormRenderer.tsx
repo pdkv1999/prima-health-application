@@ -12,9 +12,28 @@ import { useCaseStore } from "@/store/useCaseStore";
 import { VoiceInputButton } from "@/components/VoiceInputButton";
 
 // Helpers for voice input visibility and prepopulation
-// Voice input allowlist: max 2 per stage
+// Voice input allowlist: includes all long-form fields from medications section onward in Stage 1
 const voiceAllowlist: Record<"stage1" | "stage2" | "stage3", string[]> = {
-  stage1: ["referralBackground", "medicalHistory"],
+  stage1: [
+    "referralBackground", 
+    "medicalHistory", 
+    "medications", 
+    "surgicalHistory", 
+    "allergies", 
+    "forensicHistory", 
+    "substanceHistory",
+    "householdComposition",
+    "otherFamilyDetails", 
+    "familyMedicalHistory", 
+    "familyMentalHealth", 
+    "familyLearningDifficulties",
+    "antenatalDetails", 
+    "deliveryDetails", 
+    "postpartumDetails", 
+    "developmentalMilestones",
+    "additionalNotes",
+    "otherDetails"
+  ],
   stage2: ["mental_state_notes", "other_difficulties"],
   stage3: ["criteria_details", "other_diagnosis"],
 };
