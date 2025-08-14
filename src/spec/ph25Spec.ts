@@ -471,6 +471,7 @@ html: `
 <style>
   :root { --text:#111; --muted:#4b5563; }
   .page { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, "Helvetica Neue", Arial; color: var(--text); line-height:1.6; }
+  .page * { font-family: inherit; }
   .letterhead { display:flex; align-items:flex-start; justify-content:space-between; gap:24px; margin-bottom:24px; }
   .brand { font-size:28px; font-weight:700; color:#39A0D8; }
   .contact { text-align:right; font-size:12px; }
@@ -478,10 +479,13 @@ html: `
   .addr { white-space:pre-line; }
   .small { font-size:12px; color: var(--muted); }
   .re { margin-top:16px; }
-  .bold { font-weight:700; }
+  .bold { font-weight:700 !important; }
   .hr { border:0; border-top:2px solid #111; margin:20px 0; }
   .two-col { display:grid; gap:24px; }
-  h2 { font-size:18px; margin:18px 0 8px; font-weight:700 !important; }
+  h1, h2, h3, h4, h5, h6 { font-weight:700 !important; font-family: inherit !important; }
+  h2 { font-size:18px !important; margin:18px 0 8px !important; font-weight:700 !important; color: var(--text) !important; }
+  .criteria-list p { font-weight:400; margin:4px 0; }
+  .criteria-list strong { font-weight:700 !important; }
   ol { padding-left:1.25rem; }
   table { width:100%; border-collapse:collapse; }
   th, td { border:1px solid #e5e7eb; padding:8px; font-size:14px; }
