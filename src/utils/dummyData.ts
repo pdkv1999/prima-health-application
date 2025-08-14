@@ -283,7 +283,7 @@ Teacher	8/9	3/9	0/8	0/13	94%
 Scores from multiple informants indicate a consistent pattern of inattentive and hyperactive-impulsive behaviours, particularly noted by parents and teachers.`,
     other: true,
     other_details: "Monitor for emerging obsessive-compulsive behaviours",
-    next_session_type: "Final assessment and feedback session",
+    next_session_type: "Final Consultation and feedback session",
     other_details_ns: "Review with parents and provide comprehensive management recommendations",
     careManager_reminders: "Discuss medication options and school-based interventions",
     personal_info: "Aarav enjoys building with Lego and is interested in space exploration",

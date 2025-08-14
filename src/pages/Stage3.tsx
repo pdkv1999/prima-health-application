@@ -56,7 +56,7 @@ export default function Stage3() {
     <div className="max-w-5xl mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-light tracking-tight text-slate-800 mb-2">{ph25Spec.stages.stage3.title}</h1>
-        <p className="text-slate-600 font-light">Final Assessment and Clinical Observations</p>
+        <p className="text-slate-600 font-light">Final Consultation and Clinical Observations</p>
       </div>
       
       <div className="report-glass p-8 mb-8">

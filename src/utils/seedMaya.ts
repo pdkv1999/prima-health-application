@@ -139,7 +139,7 @@ Teacher	8/9	3/9	0/8	0/13	94%
 Consistent pattern of inattentive and hyperactive-impulsive behaviours across settings.`,
     other: "Yes",
     other_details: "Consider paediatric psychology for anxiety management strategies.",
-    next_session_type: "Final assessment and feedback session",
+    next_session_type: "Final Consultation and feedback session",
     other_details_ns: "Provide interim strategies for home and school; liaise with school on adjustments.",
     careManager_reminders: "Confirm Conners scores; review school accommodations; prepare management recommendations.",
     personal_info: "Enjoys drawing, building with blocks, swimming, and story audiobooks.",

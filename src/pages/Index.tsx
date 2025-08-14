@@ -17,7 +17,7 @@ interface Stage {
 const stages: Stage[] = [
   {
     id: 1,
-    name: "Parent Intake Call",
+    name: "Phone Call (Family Details Collection)",
     durationHours: 1.5,
     summary:
       "1-hour call to capture family and medical history, followed by 30 minutes to complete a structured proforma.",
@@ -44,10 +44,10 @@ const stages: Stage[] = [
   },
   {
     id: 3,
-    name: "Final Assessment & Feedback",
+    name: "Final Consultation & Feedback",
     durationHours: 1.5,
     summary:
-      "1-hour in-person assessment of mental state and feedback, plus 30 minutes to update the Stage 3 proforma.",
+      "1-hour in-person Consultation of mental state and feedback, plus 30 minutes to update the Stage 3 proforma.",
     details: [
       "60-minute appointment for assessment + feedback",
       "30 minutes updating the Stage 3 proforma",
@@ -76,7 +76,7 @@ const Index = () => {
     // SEO title + description
     const title = "ADHD Assessment Process – 4 Stages (8 Hours Total)";
     const description =
-      "Structured 4-stage ADHD assessment: intake, in-person consultations, final assessment, and report compilation. Total psychiatrist time ~8 hours.";
+      "Structured 4-stage ADHD assessment: intake, in-person consultations, final Consultation, and report compilation. Total psychiatrist time ~8 hours.";
     document.title = title;
 
     const ensureMeta = (name: string, content: string) => {

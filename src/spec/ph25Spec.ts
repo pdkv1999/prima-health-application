@@ -33,7 +33,7 @@ export const ph25Spec = {
   },
   stages: {
     stage1: {
-      title: "Stage 1 – Parent Intake Call",
+      title: "Stage 1 – Phone Call (Family Details Collection)",
       sections: [
         {
           title: "Reference and Contact Information",
@@ -49,7 +49,7 @@ export const ph25Spec = {
             { key: "assessmentDate", label: "Date of Assessment", type: "date" },
             { key: "assessmentTime", label: "Time of Assessment", type: "time" },
             { key: "assessmentLocation", label: "Location/Method of Assessment", type: "text" },
-            { key: "careManager", label: "Care Manager Delivering Assessment", type: "text" },
+            { key: "careManager", label: "Clinician Delivering Assessment", type: "text" },
           ],
         },
         { title: "Intro Notes", fields: [{ key: "introNotes", label: "Any Relevant Intro Notes", type: "textarea" }] },
@@ -138,7 +138,7 @@ export const ph25Spec = {
             { key: "assessment_date", label: "Date of Assessment", type: "date", default_from: "stage1.assessmentDate" },
             { key: "assessment_time", label: "Time of Assessment", type: "time", default_from: "stage1.assessmentTime" },
             { key: "location_method", label: "Location/Method of Assessment", type: "text", default_from: "stage1.assessmentLocation" },
-            { key: "careManager", label: "Care Manager Delivering Assessment", type: "text", default_from: "stage1.careManager" },
+            { key: "careManager", label: "Clinician Delivering Assessment", type: "text", default_from: "stage1.careManager" },
           ],
         },
         { title: "Reminders from Previous Sessions", fields: [{ key: "previous_reminders", label: "Notes", type: "textarea" }] },
@@ -271,7 +271,7 @@ export const ph25Spec = {
       ],
     },
     stage3: {
-      title: "Stage 3 – Final Assessment & Feedback",
+      title: "Stage 3 – Final Consultation & Feedback",
       sections: [
         {
           title: "Referral & Client Information",
@@ -289,7 +289,7 @@ export const ph25Spec = {
             { key: "assessment_date", label: "Date of Assessment", type: "date", default_from: "stage2.assessment_date" },
             { key: "assessment_time", label: "Time of Assessment", type: "time", default_from: "stage2.assessment_time" },
             { key: "location_method", label: "Location/Method of Assessment", type: "text", default_from: "stage2.location_method" },
-            { key: "careManager", label: "Care Manager Delivering Assessment", type: "text", default_from: "stage1.careManager" },
+            { key: "careManager", label: "Clinician Delivering Assessment", type: "text", default_from: "stage1.careManager" },
           ],
         },
         {

@@ -41,7 +41,7 @@ export const reportBindings = [
   { id: "rb_preliminarySummary", path: "stage2.preliminary_summary" },
   { id: "rb_diagnosticOutcome", path: "stage2.diagnostic_outcome" },
   
-  // Stage 3 - Final Assessment
+  // Stage 3 - Final Consultation
   { id: "rb_diagnosis", path: "stage3.diagnosis" },
   { id: "rb_otherDiagnosis", path: "stage3.other_diagnosis" },
   { id: "rb_criteriaDetails", path: "stage3.criteria_details" },

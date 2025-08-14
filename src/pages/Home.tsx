@@ -78,12 +78,12 @@ export default function Home() {
     },
     {
       icon: ListChecks,
-      title: "Stage 2: In person Assessment (DSM-5 Categorisation)",
+      title: "Stage 2: In person Consultation (DSM-5 Categorisation)",
       desc: "Structured ADHD diagnostic classification aligned with DSM-5 criteria.",
     },
     {
       icon: Users,
-      title: "Stage 3: In person Consultation (Final Assessment/Feedback)",
+      title: "Stage 3: In person Consultation (Final Consultation/Feedback)",
       desc: "Face-to-face consultation with detailed feedback and recommendations.",
     },
     {
@@ -100,10 +100,10 @@ export default function Home() {
   
   const steps = [
     "Booking",
-    "Stage 1: Phone Call (Family Details Collection)",
+    "Stage 1: Phone Consultation (Family Details Collection, etc.,)",
     "Stage 1A: Conners Questionnaire",
-    "Stage 2: In person Assessment (DSM-5 Categorisation)",
-    "Stage 3: In person Consultation (Final Assessment/Feedback)",
+    "Stage 2: In person Consultation (DSM-5 Categorisation)",
+    "Stage 3: In person Consultation (Final Consultation/Feedback)",
     "Report",
     "Aftercare",
   ];
@@ -195,14 +195,8 @@ export default function Home() {
                 </Card>
                 <Card className="hover-scale report-glass">
                   <CardHeader className="flex-row items-center gap-3">
-                    <FileText className="h-5 w-5 text-slate-700" aria-hidden />
-                    <CardTitle className="text-base text-slate-800">Digital Terms via WhatsApp</CardTitle>
-                  </CardHeader>
-                </Card>
-                <Card className="hover-scale report-glass">
-                  <CardHeader className="flex-row items-center gap-3">
                     <ShieldCheck className="h-5 w-5 text-slate-700" aria-hidden />
-                    <CardTitle className="text-base text-slate-800">Easy & Secure for Clinicians</CardTitle>
+                    <CardTitle className="text-base text-slate-800">Easy & Secure Platform for Clinicians</CardTitle>
                   </CardHeader>
                 </Card>
               </div>
