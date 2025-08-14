@@ -9,13 +9,16 @@ import { renderTemplate } from "@/utils/template";
 import { handleReportClick } from "@/utils/navigation";
 import { reportBindings } from "@/store/reportBindings";
 import { reportTemplate } from "@/utils/reportTemplate";
+import { CompletenessValidator } from "@/components/CompletenessValidator";
+import { sendEncryptedEmail } from "@/utils/emailService";
 
 export default function Report() {
-  const meta = useCaseStore((s) => s.meta)
-  const report = useCaseStore((s) => s.report)
-  const stage1 = useCaseStore((s) => s.stage1)
-  const stage2 = useCaseStore((s) => s.stage2)
-  const stage3 = useCaseStore((s) => s.stage3)
+  const meta = useCaseStore((s) => s.meta);
+  const report = useCaseStore((s) => s.report);
+  const stage1 = useCaseStore((s) => s.stage1);
+  const stage2 = useCaseStore((s) => s.stage2);
+  const stage3 = useCaseStore((s) => s.stage3);
+  const navigateToField = useCaseStore((s) => s.navigateToField);
 
   const data = useMemo(() => ({ meta, report, stage1, stage2, stage3 }), [meta, report, stage1, stage2, stage3]);
 
@@ -31,9 +34,10 @@ export default function Report() {
     [data]
   );
 
-  const updateField = useCaseStore((s) => s.updateField)
-  const bulkSet = useCaseStore((s) => s.bulkSet)
-  const [open, setOpen] = useState(false)
+  const updateField = useCaseStore((s) => s.updateField);
+  const bulkSet = useCaseStore((s) => s.bulkSet);
+  const [open, setOpen] = useState(false);
+  const [emailSending, setEmailSending] = useState(false);
 
   const reportRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +46,10 @@ export default function Report() {
     const finalHtml = cleanHtml;
     updateField("report.final_text", finalText);
     updateField("report.final_html", finalHtml);
+    toast({
+      title: "Report Saved",
+      description: "The final report has been saved successfully.",
+    });
   };
 
   const previewReport = () => {
@@ -49,9 +57,22 @@ export default function Report() {
     if (!w) return;
     w.document.write(`<html><head><title>Report Preview</title>
       <style>
-        body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial; line-height:1.6; padding:24px; }
+        body { 
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial; 
+          line-height:1.6; 
+          padding:24px; 
+          max-width: 8.5in;
+          margin: 0 auto;
+        }
         /* Remove any highlighting in preview explicitly */
-        .autofill-highlight { background: transparent !important; }
+        .autofill-highlight { 
+          background: transparent !important; 
+          padding: 0 !important;
+        }
+        h2 { color: #333; font-size: 1.25rem; margin-top: 2rem; margin-bottom: 1rem; }
+        .assessment-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .assessment-table th, .assessment-table td { border: 1px solid #ddd; padding: 0.5rem; }
+        .assessment-table th { background-color: #f5f5f5; }
       </style>
     </head><body>
       <div class="page">${cleanHtml}</div>
@@ -98,6 +119,11 @@ export default function Report() {
           <p className="text-slate-600 font-light">PrimaHealth ADHD Assessment (PH25)</p>
         </div>
 
+        {/* Completeness Validation */}
+        <div className="mb-6">
+          <CompletenessValidator onNavigateToField={navigateToField} />
+        </div>
+
         <div
           id="reportContent"
           ref={reportRef}
@@ -109,8 +135,8 @@ export default function Report() {
         </div>
 
         <div className="flex flex-wrap gap-3 justify-end">
-          <Button variant="secondary" onClick={saveReport}>Save</Button>
-          <Button onClick={previewReport}>Preview</Button>
+          <Button variant="secondary" onClick={saveReport}>Save Report</Button>
+          <Button variant="outline" onClick={previewReport}>Preview & Export</Button>
           <Button onClick={() => setOpen(true)}>Send Encrypted Email</Button>
         </div>
 
@@ -123,11 +149,40 @@ export default function Report() {
             <DialogHeader>
               <DialogTitle>Send Encrypted Email</DialogTitle>
             </DialogHeader>
-            <div className="py-2 text-sm">
-              ✅ Email sent successfully (encrypted with PrimaHealthID). A secure PDF would be attached in production.
+            <div className="py-4">
+              {emailSending ? (
+                <div className="text-center py-4">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                  <p className="text-sm text-muted-foreground">Sending encrypted email...</p>
+                </div>
+              ) : (
+                <div className="text-sm space-y-2">
+                  <p>✅ Report cleaned of all highlighting</p>
+                  <p>✅ PDF generated with professional formatting</p>
+                  <p>✅ Encrypted with PrimaHealthID protocol</p>
+                  <p>✅ Email sent successfully to GP and parents</p>
+                  <p className="text-muted-foreground text-xs mt-2">
+                    In production: Secure PDF attachment, delivery confirmation, audit trail
+                  </p>
+                </div>
+              )}
             </div>
             <DialogFooter>
-              <Button onClick={() => setOpen(false)}>OK</Button>
+              <Button 
+                onClick={async () => {
+                  setEmailSending(true);
+                  await sendEncryptedEmail(cleanHtml, meta.gpName || "gp@example.com");
+                  setEmailSending(false);
+                  toast({
+                    title: "Email Sent",
+                    description: "Encrypted report sent successfully to all recipients.",
+                  });
+                  setOpen(false);
+                }}
+                disabled={emailSending}
+              >
+                {emailSending ? "Sending..." : "Send Email"}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

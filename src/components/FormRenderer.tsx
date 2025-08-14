@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useCaseStore } from "@/store/useCaseStore";
 import { focusField, returnToReport } from "@/utils/navigation";
 import { reportBindings } from "@/store/reportBindings";
+import { ReturnToReportButton } from "@/components/ReturnToReportButton";
 
 import { VoiceInputButton } from "@/components/VoiceInputButton";
 
@@ -482,6 +483,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
 
   return (
     <div className="form-container">
+      <ReturnToReportButton />
       <div className="grid gap-6">
         {sectionsSafe.map((section, idx) => (
           <div key={idx} className="grid gap-4">
