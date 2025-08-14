@@ -597,7 +597,13 @@ html: `
   <div class="addr">{{report.other_difficulties}}</div>
 
   <h2>Diagnosis and Management Plan</h2>
-  <table>{{report.criteria_checked | criteria_table}}</table>
+  <div class="criteria-list">
+    <p><strong>Criterion A:</strong> &gt;6/9 symptoms in inattention and/or hyperactivity/impulsivity</p>
+    <p><strong>Criterion B:</strong> Symptoms were present before age 7/12</p>
+    <p><strong>Criterion C:</strong> Criteria are met in two or more settings</p>
+    <p><strong>Criterion D:</strong> Symptoms are causing impairment in social, academic, and home life</p>
+    <p><strong>Criterion E:</strong> Co-occurring difficulties considered</p>
+  </div>
   <div class="addr">{{report.criteria_details}}</div>
 
   <p>If you have any questions or concerns, please do not hesitate to contact me at the clinic.</p>
