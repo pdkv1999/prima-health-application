@@ -12,9 +12,10 @@ export function renderTemplate(html: string, data: any, opts?: { highlightDynami
       .replace(/'/g, "&#039;");
   }
 
-  function maybeWrapHighlight(str: string) {
+  function maybeWrapHighlight(str: string, fieldPath?: string) {
     if (opts && opts.highlightDynamic) {
-      return `<span class="autofill-highlight">${str}</span>`;
+      const clickHandler = fieldPath ? `onclick="window.navigateToField('${fieldPath}')"` : '';
+      return `<span class="autofill-highlight cursor-pointer hover:bg-yellow-300" ${clickHandler}>${str}</span>`;
     }
     return str;
   }
@@ -72,7 +73,7 @@ export function renderTemplate(html: string, data: any, opts?: { highlightDynami
       }
 
       if (val == null) return "";
-      return maybeWrapHighlight(escapeHtml(String(val)));
+      return maybeWrapHighlight(escapeHtml(String(val)), path);
     } catch (e) {
       return "";
     }

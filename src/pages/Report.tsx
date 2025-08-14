@@ -57,12 +57,22 @@ export default function Report() {
   };
 
   useEffect(() => {
-    // hydrate from store if needed (no change to existing logic)
-    const persisted = useCaseStore.getState().report?.final_html;
-    if (persisted) {
-      // nothing required here for now
+    // Global function for stage navigation
+    (window as any).navigateToField = (fieldPath: string) => {
+      const [stage, field] = fieldPath.split('.');
+      const stageRoutes = { stage1: '/stage1', stage2: '/stage2', stage3: '/stage3' };
+      if (stageRoutes[stage as keyof typeof stageRoutes]) {
+        window.location.href = stageRoutes[stage as keyof typeof stageRoutes];
+      }
+    };
+    
+    // Auto-populate with demo data if empty
+    const currentData = useCaseStore.getState();
+    if (!currentData.stage1?.clientName) {
+      const seed = getMayaSeed();
+      bulkSet(seed);
     }
-  }, []);
+  }, [bulkSet]);
 
   return (
     <div className="apple-bg min-h-screen">
