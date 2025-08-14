@@ -176,9 +176,6 @@ export default function Home() {
               <h1 className="text-3xl font-semibold leading-tight md:text-5xl">
                 PrimaHealth's ADHD Assessment Pathway
               </h1>
-              <p className="mt-4 text-muted-foreground md:text-lg">
-                From first contact to aftercare — all in one secure, easy-to-use platform.
-              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button asChild>
                   <Link to="/stage1" aria-label="Start ADHD assessment now">
