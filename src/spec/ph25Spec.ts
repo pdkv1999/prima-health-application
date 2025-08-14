@@ -130,7 +130,6 @@ export const ph25Spec = {
             { key: "client_address", label: "Client/Patient Address", type: "textarea", default_from: "stage1.clientAddress" },
             { key: "dob", label: "Date of Birth", type: "date", default_from: "stage1.dob" },
             { key: "guardian_name", label: "Guardian/Mother Name", type: "text", default_from: "stage1.guardianName" },
-            { key: "contact_number", label: "Contact Number", type: "text", default_from: "stage1.contactNumber" },
           ],
         },
         {
@@ -143,13 +142,6 @@ export const ph25Spec = {
           ],
         },
         { title: "Reminders from Previous Sessions", fields: [{ key: "previous_reminders", label: "Notes", type: "textarea" }] },
-        {
-          title: "Who Was Present",
-          fields: [
-            { key: "present", label: "Present", type: "radio", options: ["Mother", "Father", "Both"] },
-            { key: "present_other", label: "Other (specify)", type: "text" },
-          ],
-        },
         { title: "Any Relevant Intro Notes", fields: [{ key: "intro_notes", label: "Intro Notes", type: "textarea" }] },
         {
           title: "Mental State Examination",
@@ -293,7 +285,7 @@ export const ph25Spec = {
             { key: "client_address", label: "Client Address", type: "textarea", default_from: "stage1.clientAddress" },
             { key: "dob", label: "Date of Birth", type: "date", default_from: "stage1.dob" },
             { key: "guardian_name", label: "Guardian/Mother Name", type: "text", default_from: "stage1.guardianName" },
-            { key: "contact_number", label: "Contact Number", type: "text", default_from: "stage1.contactNumber" },
+            
             { key: "assessment_date", label: "Date of Assessment", type: "date", default_from: "stage2.assessment_date" },
             { key: "assessment_time", label: "Time of Assessment", type: "time", default_from: "stage2.assessment_time" },
             { key: "location_method", label: "Location/Method of Assessment", type: "text", default_from: "stage2.location_method" },

@@ -34,8 +34,31 @@ const voiceAllowlist: Record<"stage1" | "stage2" | "stage3", string[]> = {
     "additionalNotes",
     "otherDetails"
   ],
-  stage2: ["mental_state_notes", "other_difficulties"],
-  stage3: ["criteria_details", "other_diagnosis"],
+  stage2: [
+    "previous_reminders", 
+    "intro_notes", 
+    "mental_state_notes", 
+    "other_difficulties", 
+    "comorbidities", 
+    "other_notes", 
+    "ot_details", 
+    "slt_details", 
+    "cognitive_details", 
+    "other_details", 
+    "other_details_ns", 
+    "careManager_reminders", 
+    "personal_info", 
+    "additional_notes"
+  ],
+  stage3: [
+    "additional_doctors", 
+    "mental_state_details", 
+    "other_diagnosis", 
+    "criteria_details", 
+    "aftercare_details", 
+    "recommendations", 
+    "additional_notes_final"
+  ],
 };
 const shouldShowVoice = (stage: "stage1" | "stage2" | "stage3", key: string, type?: string) => {
   return type === "textarea" && voiceAllowlist[stage]?.includes(key);
