@@ -483,7 +483,7 @@ html: `
   .hr { border:0; border-top:2px solid #111; margin:20px 0; }
   .two-col { display:grid; gap:24px; }
   h1, h2, h3, h4, h5, h6 { font-weight:700 !important; font-family: inherit !important; }
-  h2 { font-size:18px !important; margin:18px 0 8px !important; font-weight:700 !important; color: var(--text) !important; }
+  h2 { font-size:18px !important; margin:18px 0 2px !important; font-weight:700 !important; color: var(--text) !important; }
   .criteria-list p { font-weight:400; margin:4px 0; }
   .criteria-list strong { font-weight:700 !important; }
   ol { padding-left:1.25rem; }
