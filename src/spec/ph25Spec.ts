@@ -600,6 +600,18 @@ html: `
   <h2>Clinical Assessment and Reported History</h2>
   <div class="addr">{{report.other_difficulties}}</div>
 
+  <h2>Mental State Examination</h2>
+  <div class="addr">{{report.mental_state_notes}}</div>
+
+  <h2>DSM-5 Inattention Criteria Assessment</h2>
+  <div class="addr">{{report.inattention | criteriaTable}}</div>
+
+  <h2>DSM-5 Hyperactivity/Impulsivity Criteria Assessment</h2>
+  <div class="addr">{{report.hyperimpulsivity | criteriaTable}}</div>
+
+  <h2>Comorbidities and Other Difficulties</h2>
+  <div class="addr">{{report.comorbidities}}</div>
+
   <h2>Diagnosis and Management Plan</h2>
   <div class="criteria-list">
     <p><strong>Criterion A:</strong> &gt;6/9 symptoms in inattention and/or hyperactivity/impulsivity</p>
