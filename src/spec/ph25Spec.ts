@@ -604,10 +604,10 @@ html: `
   <div class="addr">{{report.mental_state_notes}}</div>
 
   <h2>DSM-5 Inattention Criteria Assessment</h2>
-  <div class="addr">{{report.inattention | criteriaTable}}</div>
+  <div class="addr">{{report.inattention | inattentionTable}}</div>
 
   <h2>DSM-5 Hyperactivity/Impulsivity Criteria Assessment</h2>
-  <div class="addr">{{report.hyperimpulsivity | criteriaTable}}</div>
+  <div class="addr">{{report.hyperimpulsivity | inattentionTable}}</div>
 
   <h2>Comorbidities and Other Difficulties</h2>
   <div class="addr">{{report.comorbidities}}</div>

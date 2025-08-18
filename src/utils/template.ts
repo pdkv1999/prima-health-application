@@ -67,6 +67,33 @@ export function renderTemplate(html: string, data: any, opts?: { highlightDynami
             .join("");
           return maybeWrapHighlight(`<table class="criteria"><tr><th>Criteria</th><th>Criteria Met</th></tr>${rows}</table>`);
         }
+        if (filter === "inattentionTable") {
+          // expects object with numbered keys like {"1": {criteria: bool, notes: string}}
+          if (!val || typeof val !== 'object') return "";
+          const criteriaLabels = [
+            "Careless mistakes in school work or activities.",
+            "Difficulty sustaining attention in tasks or activities.",
+            "Not listening when spoken to (dreamy, pre-occupied).",
+            "Not following through on instructions; fails to finish work/chores.",
+            "Difficulty organizing tasks/activities.",
+            "Avoids/dislikes tasks requiring sustained mental effort.",
+            "Losing things necessary for school/home.",
+            "Easily distracted by external stimuli.",
+            "Often forgetful in daily activities."
+          ];
+          const rows = Object.keys(val)
+            .filter(key => !isNaN(Number(key)) && Number(key) >= 1 && Number(key) <= 9)
+            .sort((a, b) => Number(a) - Number(b))
+            .map((key) => {
+              const item = val[key];
+              const criteriaLabel = criteriaLabels[Number(key) - 1] || `Criteria ${key}`;
+              const met = item?.criteria ? "Yes" : "No";
+              const notes = item?.notes ? escapeHtml(String(item.notes)) : "";
+              return `<tr><td>${escapeHtml(criteriaLabel)}</td><td>${met}</td><td>${notes}</td></tr>`;
+            })
+            .join("");
+          return maybeWrapHighlight(`<table class="criteria"><tr><th>DSM-5 Criteria</th><th>Met</th><th>Clinical Notes</th></tr>${rows}</table>`);
+        }
         if (filter === "json") {
           return maybeWrapHighlight(escapeHtml(JSON.stringify(val, null, 2)));
         }
