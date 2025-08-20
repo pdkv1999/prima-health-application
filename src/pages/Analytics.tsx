@@ -9,6 +9,7 @@ import StageAnalyticsChart from "@/components/analytics/StageAnalyticsChart";
 import SavingsOverviewCard from "@/components/analytics/SavingsOverviewCard";
 import ThroughputChart from "@/components/analytics/ThroughputChart";
 import { Download, Calculator, RefreshCw } from "lucide-react";
+import html2pdf from "html2pdf.js";
 
 export default function Analytics() {
   const [caseCount, setCaseCount] = useState<number>(50);
@@ -120,8 +121,18 @@ export default function Analytics() {
   }, []);
 
   const handleExportReport = () => {
-    // This would implement PDF/image export functionality
-    console.log("Exporting analytics report...");
+    const element = document.querySelector('.analytics-content');
+    const opt = {
+      margin: 0.5,
+      filename: `PH25-Analytics-Report-${new Date().toISOString().split('T')[0]}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    
+    if (element) {
+      html2pdf().set(opt).from(element).save();
+    }
   };
 
   const handleRecalculate = () => {
@@ -143,7 +154,7 @@ export default function Analytics() {
         </Badge>
       </div>
 
-      <div className="report-glass p-8 space-y-8">
+      <div className="report-glass p-8 space-y-8 analytics-content">
         {/* Input Controls */}
         <header className="flex items-center justify-between p-6 bg-slate-50 dark:bg-slate-800 rounded-lg">
           <div className="flex items-center gap-6">
