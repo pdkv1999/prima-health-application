@@ -68,7 +68,7 @@ export default function StageAnalyticsChart({ stageData, caseCount, title }: Sta
           }}
           className="w-full h-[300px]"
         >
-          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 40, bottom: 60 }}>
             <defs>
               <linearGradient id="beforeGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="hsl(var(--muted-foreground))" stopOpacity={0.85} />
@@ -82,10 +82,11 @@ export default function StageAnalyticsChart({ stageData, caseCount, title }: Sta
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis 
               dataKey="stage" 
-              tick={{ fontSize: 12 }}
-              angle={-45}
-              textAnchor="end"
-              height={80}
+              tick={{ fontSize: 11 }}
+              angle={0}
+              textAnchor="middle"
+              height={60}
+              interval={0}
             />
             <YAxis 
               label={{ value: 'Hours', angle: -90, position: 'insideLeft' }}

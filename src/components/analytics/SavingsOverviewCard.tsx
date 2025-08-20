@@ -11,7 +11,6 @@ import {
 
 interface SavingsData {
   totalTimeSaved: number;
-  totalCostSaved: number;
   averageEfficiencyGain: number;
   additionalCasesCapacity: number;
   throughputImprovement: number;
@@ -33,7 +32,6 @@ function formatCurrency(value: number) {
 export default function SavingsOverviewCard({ savingsData, caseCount }: SavingsOverviewCardProps) {
   const {
     totalTimeSaved,
-    totalCostSaved,
     averageEfficiencyGain,
     additionalCasesCapacity,
     throughputImprovement
@@ -46,13 +44,6 @@ export default function SavingsOverviewCard({ savingsData, caseCount }: SavingsO
       icon: Clock,
       color: "text-blue-600",
       bgColor: "bg-blue-50 dark:bg-blue-900/20"
-    },
-    {
-      label: "Cost Savings",
-      value: formatCurrency(totalCostSaved),
-      icon: Euro,
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-50 dark:bg-emerald-900/20"
     },
     {
       label: "Efficiency Gain",
@@ -95,7 +86,7 @@ export default function SavingsOverviewCard({ savingsData, caseCount }: SavingsO
       </CardHeader>
       
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {kpiData.map((kpi, index) => {
             const IconComponent = kpi.icon;
             return (

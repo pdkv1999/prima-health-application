@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Clock, Euro, TrendingUp, Users } from "lucide-react";
+import { Clock, TrendingUp, Users } from "lucide-react";
 
 interface RoleData {
   role: string;
@@ -83,25 +83,14 @@ export default function RoleAnalyticsCard({ roleData, caseCount }: RoleAnalytics
           <Progress value={timeSavedPercent} className="h-2" />
         </div>
 
-        {/* Cost Impact */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="text-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
-            <div className="flex items-center justify-center gap-1 text-slate-600 mb-1">
-              <Euro className="h-3 w-3" />
-              <span className="text-xs">Total cost</span>
-            </div>
-            <div className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-              {formatCurrency(costAfter)}
-            </div>
+        {/* Time Impact Summary */}
+        <div className="text-center p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+          <div className="flex items-center justify-center gap-1 text-emerald-600 mb-1">
+            <TrendingUp className="h-3 w-3" />
+            <span className="text-xs">Total Time Saved</span>
           </div>
-          <div className="text-center p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
-            <div className="flex items-center justify-center gap-1 text-emerald-600 mb-1">
-              <TrendingUp className="h-3 w-3" />
-              <span className="text-xs">Saved</span>
-            </div>
-            <div className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-              {formatCurrency(costSaved)}
-            </div>
+          <div className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+            {timeSaved.toFixed(1)} hours
           </div>
         </div>
 

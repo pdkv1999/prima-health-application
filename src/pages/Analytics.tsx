@@ -66,27 +66,19 @@ export default function Analytics() {
     }
   ];
 
-  // Calculate overall savings
+  // Calculate overall savings (time-focused)
   const calculateSavings = () => {
     const roleSavings = roleData.reduce((acc, role) => {
       const timeSaved = (role.beforeTimePerCase - role.afterTimePerCase) * caseCount;
-      const costSaved = timeSaved * role.hourlyRate;
-      return {
-        totalTime: acc.totalTime + timeSaved,
-        totalCost: acc.totalCost + costSaved
-      };
-    }, { totalTime: 0, totalCost: 0 });
+      return acc + timeSaved;
+    }, 0);
 
     const stageSavings = clinicalStages.reduce((acc, stage) => {
       const timeSaved = (stage.beforeTime - stage.afterTime) * caseCount;
       return acc + timeSaved;
     }, 0);
 
-    const clinicianHourlyRate = 60; // Clinician rate
-    const stageCostSavings = stageSavings * clinicianHourlyRate;
-
-    const totalTimeSaved = roleSavings.totalTime + stageSavings;
-    const totalCostSaved = roleSavings.totalCost + stageCostSavings;
+    const totalTimeSaved = roleSavings + stageSavings;
     
     const totalTimeBefore = roleData.reduce((acc, role) => acc + (role.beforeTimePerCase * caseCount), 0) +
                            clinicalStages.reduce((acc, stage) => acc + (stage.beforeTime * caseCount), 0);
@@ -97,7 +89,6 @@ export default function Analytics() {
 
     return {
       totalTimeSaved,
-      totalCostSaved,
       averageEfficiencyGain,
       additionalCasesCapacity,
       throughputImprovement
@@ -109,7 +100,7 @@ export default function Analytics() {
   useEffect(() => {
     document.title = "Impact Analysis Dashboard – PrimaHealth ADHD (PH25)";
     const desc =
-      "Comprehensive impact analysis showing role-wise and stage-wise efficiency gains, time savings, cost reductions, and throughput improvements for ADHD assessments.";
+      "Comprehensive impact analysis showing role-wise and stage-wise efficiency gains, time savings, and throughput improvements for ADHD assessments.";
     let metaDesc = document.querySelector('meta[name="description"]');
     if (!metaDesc) {
       metaDesc = document.createElement("meta");
@@ -234,9 +225,9 @@ export default function Analytics() {
               System Implementation Benefits
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              The analysis demonstrates significant improvements across all roles and stages, with measurable time savings, 
-              cost reductions, and enhanced throughput. These metrics provide concrete evidence of system effectiveness 
-              and ROI for stakeholder reporting.
+              The analysis demonstrates significant improvements across all roles and stages, with measurable time savings 
+              and enhanced throughput. These metrics provide concrete evidence of system effectiveness 
+              and efficiency gains for stakeholder reporting.
             </p>
           </div>
         </footer>
