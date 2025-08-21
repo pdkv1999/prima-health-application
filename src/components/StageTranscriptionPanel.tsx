@@ -288,8 +288,11 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
                 const f = e.target.files?.[0];
                 if (f) void loadFile(f);
               }} />
-              <Button variant="secondary" type="button" onClick={() => setText(sampleTranscripts[stage])}>
-                Load {stage} sample
+              <Button variant="secondary" type="button" onClick={() => {
+                setText(sampleTranscripts[stage]);
+                toast({ title: "Sample transcript loaded", description: "Now click 'Populate & Generate Report' to process it." });
+              }}>
+                Load Data
               </Button>
             </div>
             <div className="grid gap-2">
@@ -309,7 +312,7 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
                 disabled={isProcessing}
                 className="bg-primary"
               >
-                {isProcessing ? "Processing..." : "🤖 AI Extract & Populate"}
+                {isProcessing ? "Processing..." : "Populate & Generate Report"}
               </Button>
               <Button variant="outline" type="button" onClick={() => setText("")}>Clear</Button>
             </div>
