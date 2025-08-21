@@ -5,6 +5,7 @@ import { ph25Spec } from "@/spec/ph25Spec";
 import { useCaseStore } from "@/store/useCaseStore";
 import { toast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import StageTranscriptionPanel from "@/components/StageTranscriptionPanel";
 
 function useImportExport() {
   const exportJSON = useCaseStore((s) => s.exportJSON);
@@ -58,6 +59,8 @@ export default function Stage2() {
         <h1 className="text-3xl font-light tracking-tight text-slate-800 mb-2">{ph25Spec.stages.stage2.title}</h1>
         <p className="text-slate-600 font-light">DSM-5 Assessment and Behavioral Analysis</p>
       </div>
+      
+      <StageTranscriptionPanel stage="stage2" stageTitle="Stage 2" />
       
       <div className="report-glass p-8 mb-8">
         <FormRenderer stageKey="stage2" sections={ph25Spec.stages.stage2.sections as any} />
