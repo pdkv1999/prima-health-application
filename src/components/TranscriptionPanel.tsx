@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { SpeechToFormService } from "@/services/speechToForm";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -148,7 +149,10 @@ const sampleTranscript = `Ref: 12345\nGP Name: Smith\nGP Address: 1 Health Stree
 export default function TranscriptionPanel() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [text, setText] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [extractionResults, setExtractionResults] = useState<any>(null);
   const updateField = useCaseStore((s) => s.updateField);
+  const speechService = new SpeechToFormService();
 
   const loadFile = async (file: File) => {
     if (file.type.startsWith("text/")) {
@@ -178,6 +182,47 @@ export default function TranscriptionPanel() {
     toast({ title: "Fields populated", description: `${entries.length} fields updated from transcript` });
   };
 
+  const processWithOrchestrator = async () => {
+    if (!text.trim()) {
+      toast({ title: "No transcript", description: "Please provide transcript text" });
+      return;
+    }
+
+    setIsProcessing(true);
+    try {
+      const results = await speechService.processTranscript(text);
+      setExtractionResults(results);
+      
+      // Auto-apply high-confidence fields
+      const autoApplyFields = results.validation.apply_plan.filter(
+        plan => plan.status === 'auto_apply'
+      );
+      
+      // Apply extracted fields to Stage 1
+      Object.values(results.orchestration.stages.stage1.sections).forEach(section => {
+        Object.entries(section.fields).forEach(([fieldId, fieldData]) => {
+          const shouldAutoApply = autoApplyFields.some(plan => plan.field_id === fieldId);
+          if (shouldAutoApply) {
+            updateField(`stage1.${fieldId}`, fieldData.value);
+          }
+        });
+      });
+
+      const autoAppliedCount = autoApplyFields.length;
+      const suggestedCount = results.validation.apply_plan.length - autoAppliedCount;
+      
+      toast({ 
+        title: "AI Processing Complete", 
+        description: `${autoAppliedCount} fields auto-applied, ${suggestedCount} suggestions available`
+      });
+    } catch (error) {
+      toast({ title: "Processing Error", description: "Failed to process transcript" });
+      console.error(error);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <Card className="border">
       <CardHeader>
@@ -199,9 +244,53 @@ export default function TranscriptionPanel() {
           <Textarea id="tx" value={text} onChange={(e) => setText(e.currentTarget.value)} placeholder="Paste transcript here (e.g., 'GP Name: Smith')" rows={8} />
         </div>
         <div className="flex gap-3">
-          <Button type="button" onClick={() => applyToForm(parseTranscript(text))}>Auto-populate fields</Button>
+          <Button type="button" onClick={() => applyToForm(parseTranscript(text))}>
+            Legacy: Auto-populate fields
+          </Button>
+          <Button 
+            type="button" 
+            onClick={processWithOrchestrator} 
+            disabled={isProcessing}
+            className="bg-primary"
+          >
+            {isProcessing ? "Processing..." : "🤖 AI Extract & Populate"}
+          </Button>
           <Button variant="outline" type="button" onClick={() => setText("")}>Clear</Button>
         </div>
+
+        {extractionResults && (
+          <div className="mt-6 p-4 border rounded-lg bg-muted/50">
+            <h4 className="font-semibold mb-2">AI Extraction Results</h4>
+            <div className="space-y-2 text-sm">
+              <div>
+                <strong>Stage 1 Completion:</strong> {
+                  extractionResults.validation.stage_gates.stage1?.completion_ready ? 
+                  "✅ Ready" : "⚠️ Incomplete"
+                }
+              </div>
+              {extractionResults.validation.stage_gates.stage1?.missing_required_fields?.length > 0 && (
+                <div>
+                  <strong>Missing Required:</strong> {
+                    extractionResults.validation.stage_gates.stage1.missing_required_fields.join(', ')
+                  }
+                </div>
+              )}
+              <div>
+                <strong>Fields Processed:</strong> {extractionResults.validation.apply_plan.length}
+              </div>
+              <div>
+                <strong>Auto-Applied:</strong> {
+                  extractionResults.validation.apply_plan.filter(p => p.status === 'auto_apply').length
+                }
+              </div>
+              <div>
+                <strong>Suggestions:</strong> {
+                  extractionResults.validation.apply_plan.filter(p => p.status === 'suggest_only').length
+                }
+              </div>
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
