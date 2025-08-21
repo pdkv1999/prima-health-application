@@ -224,7 +224,18 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
 
     setIsProcessing(true);
     try {
+      // DEBUG: Let's see what's actually in the transcript
+      console.log("=== TRANSCRIPT CONTENT ===");
+      console.log(text);
+      console.log("=== END TRANSCRIPT ===");
+      
       const results = await speechService.processTranscript(text);
+      
+      // DEBUG: Let's see what the AI extracted
+      console.log("=== EXTRACTION RESULTS ===");
+      console.log(JSON.stringify(results, null, 2));
+      console.log("=== END EXTRACTION ===");
+      
       setExtractionResults(results);
       
       // Auto-apply high-confidence fields across ALL STAGES
@@ -239,6 +250,7 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
             Object.entries(section.fields).forEach(([fieldId, fieldData]: [string, any]) => {
               const shouldAutoApply = allAutoApplyFields.some(plan => plan.field_id === fieldId && plan.stage === stageKey);
               if (shouldAutoApply) {
+                console.log(`Applying field: ${stageKey}.${fieldId} = ${fieldData.value}`);
                 updateField(`${stageKey}.${fieldId}`, fieldData.value);
               }
             });
@@ -249,6 +261,7 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
       // Assign 'NA' to missing required fields so user can proceed
       const missingFields = results.validation.apply_plan.filter(plan => plan.status === 'suggest_only' && plan.reason?.includes('Empty value'));
       missingFields.forEach(field => {
+        console.log(`Assigning NA to: ${field.stage}.${field.field_id}`);
         updateField(`${field.stage}.${field.field_id}`, 'NA');
       });
 
