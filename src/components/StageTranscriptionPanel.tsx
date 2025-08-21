@@ -236,8 +236,6 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
       console.log(JSON.stringify(results, null, 2));
       console.log("=== END EXTRACTION ===");
       
-      setExtractionResults(results);
-      
       // Auto-apply high-confidence fields across ALL STAGES
       const allAutoApplyFields = results.validation.apply_plan.filter(
         plan => plan.status === 'auto_apply'
@@ -265,6 +263,12 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
         updateField(`${field.stage}.${field.field_id}`, 'NA');
       });
 
+      // Now check current form state and update validation results accordingly
+      const currentState = useCaseStore.getState();
+      const updatedResults = updateValidationWithCurrentFormState(results, currentState);
+      
+      setExtractionResults(updatedResults);
+
       const totalAutoApplied = allAutoApplyFields.length;
       const totalMissingAssignedNA = missingFields.length;
       const totalProcessed = results.validation.apply_plan.length;
@@ -279,6 +283,65 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  // Helper function to update validation results with current form state
+  const updateValidationWithCurrentFormState = (results: any, currentState: any) => {
+    console.log('Updating validation with current form state:', currentState);
+    
+    const requiredFieldsByStage = {
+      stage1: ['clientName', 'dob', 'guardianName', 'assessmentDate'],
+      stage2: ['client_name', 'assessment_date', 'mse'],  
+      stage3: ['diagnosis', 'criteria']
+    };
+
+    // Update validation for each stage based on current form values
+    const updatedStageGates = { ...results.validation.stage_gates };
+    
+    Object.keys(requiredFieldsByStage).forEach(stageKey => {
+      const stageData = currentState[stageKey] || {};
+      const requiredFields = requiredFieldsByStage[stageKey as keyof typeof requiredFieldsByStage] || [];
+      
+      // Check which fields are actually missing/empty in current form
+      const actuallyMissingFields = requiredFields.filter(fieldId => {
+        const value = stageData[fieldId];
+        const isEmpty = !value || value === '' || value === 'NA' || (Array.isArray(value) && value.length === 0);
+        console.log(`Checking ${stageKey}.${fieldId}: value="${value}", isEmpty=${isEmpty}`);
+        return isEmpty;
+      });
+      
+      console.log(`Stage ${stageKey} - Required: ${requiredFields}, Actually missing: ${actuallyMissingFields}`);
+      
+      updatedStageGates[stageKey] = {
+        completion_ready: actuallyMissingFields.length === 0,
+        missing_required_fields: actuallyMissingFields
+      };
+    });
+
+    // Update apply plan to reflect current form state
+    const updatedApplyPlan = results.validation.apply_plan.map((plan: any) => {
+      const stageData = currentState[plan.stage] || {};
+      const currentValue = stageData[plan.field_id];
+      
+      if (currentValue && currentValue !== '' && currentValue !== 'NA') {
+        // Field is actually filled, mark as applied
+        return { ...plan, status: 'auto_apply', reason: 'Already filled in form' };
+      } else if (!currentValue || currentValue === '' || currentValue === 'NA') {
+        // Field is actually empty/NA, keep as missing
+        return { ...plan, status: 'suggest_only', reason: 'Empty value or NA' };
+      }
+      
+      return plan;
+    });
+
+    return {
+      ...results,
+      validation: {
+        ...results.validation,
+        apply_plan: updatedApplyPlan,
+        stage_gates: updatedStageGates
+      }
+    };
   };
 
   return (
