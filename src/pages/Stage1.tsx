@@ -49,6 +49,15 @@ export default function Stage1() {
   const { doExport, doImport, fileRef, onFile } = useImportExport();
   const validateRequired = useCaseStore((s) => s.validateRequired);
 
+  const handleNavigateToField = (stage: string, fieldId: string) => {
+    // Focus on the specific field
+    const fieldElement = document.querySelector(`[name="${stage}.${fieldId}"]`) as HTMLElement;
+    if (fieldElement) {
+      fieldElement.focus();
+      fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   useEffect(() => {
     const title = "PrimaHealth ADHD Assessment (PH25) – Stage 1";
     document.title = title;
@@ -84,7 +93,11 @@ export default function Stage1() {
         <p className="text-slate-600 font-light">Initial Assessment and Patient Information</p>
       </div>
       
-      <StageTranscriptionPanel stage="stage1" stageTitle="Stage 1" />
+      <StageTranscriptionPanel 
+        stage="stage1" 
+        stageTitle="Stage 1" 
+        onNavigateToField={handleNavigateToField}
+      />
       
       <div className="report-glass p-8 mb-8">
         <FormRenderer stageKey="stage1" sections={ph25Spec.stages.stage1.sections as any} />

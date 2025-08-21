@@ -49,6 +49,15 @@ export default function Stage2() {
   const { doExport, doImport, fileRef, onFile } = useImportExport();
   const validateRequired = useCaseStore((s) => s.validateRequired);
 
+  const handleNavigateToField = (stage: string, fieldId: string) => {
+    // Focus on the specific field
+    const fieldElement = document.querySelector(`[name="${stage}.${fieldId}"]`) as HTMLElement;
+    if (fieldElement) {
+      fieldElement.focus();
+      fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   useEffect(() => {
     document.title = "PrimaHealth ADHD Assessment (PH25) – Stage 2";
   }, []);
@@ -60,7 +69,11 @@ export default function Stage2() {
         <p className="text-slate-600 font-light">DSM-5 Assessment and Behavioral Analysis</p>
       </div>
       
-      <StageTranscriptionPanel stage="stage2" stageTitle="Stage 2" />
+      <StageTranscriptionPanel 
+        stage="stage2" 
+        stageTitle="Stage 2" 
+        onNavigateToField={handleNavigateToField}
+      />
       
       <div className="report-glass p-8 mb-8">
         <FormRenderer stageKey="stage2" sections={ph25Spec.stages.stage2.sections as any} />
