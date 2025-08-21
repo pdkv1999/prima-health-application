@@ -9,46 +9,51 @@ import { ChevronDown } from "lucide-react";
 
 interface ExtractionReportProps {
   extractionResults: any;
+  currentStage?: string;
   onNavigateToField?: (stage: string, fieldId: string) => void;
 }
 
-export default function ExtractionReport({ extractionResults, onNavigateToField }: ExtractionReportProps) {
+export default function ExtractionReport({ extractionResults, currentStage, onNavigateToField }: ExtractionReportProps) {
   if (!extractionResults) return null;
 
   const [isOpen, setIsOpen] = React.useState(true);
 
-  // Calculate section-wise statistics
+  // Calculate section-wise statistics - filter by current stage if provided
   const getSectionStats = () => {
     const stats: Record<string, { completed: number; missing: number; total: number; fields: Array<{fieldId: string, status: string, reason?: string}> }> = {};
     
-    extractionResults.validation.apply_plan.forEach((plan: any) => {
-      const sectionKey = plan.stage;
-      if (!stats[sectionKey]) {
-        stats[sectionKey] = { completed: 0, missing: 0, total: 0, fields: [] };
-      }
-      
-      stats[sectionKey].total++;
-      stats[sectionKey].fields.push({
-        fieldId: plan.field_id,
-        status: plan.status,
-        reason: plan.reason
+    extractionResults.validation.apply_plan
+      .filter((plan: any) => !currentStage || plan.stage === currentStage)
+      .forEach((plan: any) => {
+        const sectionKey = plan.stage;
+        if (!stats[sectionKey]) {
+          stats[sectionKey] = { completed: 0, missing: 0, total: 0, fields: [] };
+        }
+        
+        stats[sectionKey].total++;
+        stats[sectionKey].fields.push({
+          fieldId: plan.field_id,
+          status: plan.status,
+          reason: plan.reason
+        });
+        
+        if (plan.status === 'auto_apply') {
+          stats[sectionKey].completed++;
+        } else {
+          stats[sectionKey].missing++;
+        }
       });
-      
-      if (plan.status === 'auto_apply') {
-        stats[sectionKey].completed++;
-      } else {
-        stats[sectionKey].missing++;
-      }
-    });
     
     return stats;
   };
 
   const sectionStats = getSectionStats();
   
-  // Overall statistics
-  const totalFields = extractionResults.validation.apply_plan.length;
-  const completedFields = extractionResults.validation.apply_plan.filter((p: any) => p.status === 'auto_apply').length;
+  // Overall statistics - filter by current stage if provided
+  const filteredApplyPlan = extractionResults.validation.apply_plan
+    .filter((p: any) => !currentStage || p.stage === currentStage);
+  const totalFields = filteredApplyPlan.length;
+  const completedFields = filteredApplyPlan.filter((p: any) => p.status === 'auto_apply').length;
   const missingFields = totalFields - completedFields;
   
   const getStatusIcon = (status: string) => {
@@ -172,7 +177,9 @@ export default function ExtractionReport({ extractionResults, onNavigateToField 
             {/* Stage completion status */}
             <div className="space-y-3">
               <h4 className="font-semibold text-lg">Stage Completion Status</h4>
-              {Object.entries(extractionResults.validation.stage_gates).map(([stage, gateInfo]: [string, any]) => (
+              {Object.entries(extractionResults.validation.stage_gates)
+                .filter(([stage]) => !currentStage || stage === currentStage)
+                .map(([stage, gateInfo]: [string, any]) => (
                 <div key={stage} className="flex items-center justify-between p-3 rounded-lg border">
                   <div className="flex items-center gap-2">
                     {gateInfo.completion_ready ? 

@@ -316,6 +316,7 @@ export default function StageTranscriptionPanel({ stage, stageTitle, onNavigateT
 
             <ExtractionReport 
               extractionResults={extractionResults} 
+              currentStage={stage}
               onNavigateToField={onNavigateToField}
             />
           </CardContent>
