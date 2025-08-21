@@ -193,9 +193,19 @@ export default function ExtractionReport({ extractionResults, currentStage, onNa
                       {gateInfo.completion_ready ? "✅ Ready" : "⚠️ Incomplete"}
                     </Badge>
                     {gateInfo.missing_required_fields?.length > 0 && (
-                      <Badge variant="outline" className="text-yellow-600">
-                        {gateInfo.missing_required_fields.length} missing
-                      </Badge>
+                      <div className="flex flex-wrap gap-1">
+                        {gateInfo.missing_required_fields.map((fieldId: string, index: number) => (
+                          <Button
+                            key={index}
+                            variant="outline"
+                            size="sm"
+                            className="h-6 px-2 text-xs text-yellow-600 border-yellow-300 hover:bg-yellow-50"
+                            onClick={() => onNavigateToField?.(stage, fieldId)}
+                          >
+                            {fieldId} ⚠
+                          </Button>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </div>
