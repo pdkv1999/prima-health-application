@@ -17,7 +17,6 @@ const items = [
   { title: "Stage 1", url: "/stage1", icon: ClipboardList },
   { title: "Stage 2", url: "/stage2", icon: ClipboardCheck },
   { title: "Stage 3", url: "/stage3", icon: FileSignature },
-  { title: "Transcription", url: "/transcription", icon: AudioLines },
   { title: "Analytics", url: "/analytics", icon: ChartBar },
   { title: "Report", url: "/report", icon: FileText },
 ];

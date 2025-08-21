@@ -11,7 +11,6 @@ import Stage2 from "@/pages/Stage2";
 import Stage3 from "@/pages/Stage3";
 import Report from "@/pages/Report";
 import Analytics from "@/pages/Analytics";
-import Transcription from "@/pages/Transcription";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 import { useCaseStore } from "@/store/useCaseStore";
@@ -67,8 +66,6 @@ const App = () => {
                 <Route path="/stage1" element={<Stage1 />} />
                 <Route path="/stage2" element={<Stage2 />} />
                 <Route path="/stage3" element={<Stage3 />} />
-                {/* New dedicated route for the transcription demo */}
-                <Route path="/transcription" element={<Transcription />} />
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/report" element={<Report />} />
               </Route>
