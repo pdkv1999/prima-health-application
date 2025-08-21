@@ -150,6 +150,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
             <Input
               value={v ?? ""}
               type="text"
+              data-field-id={field.key}
               onChange={(e) => setVal(field.key, e.currentTarget.value)}
             />
             {shouldShowVoice(stageKey, field.key, field.type) && (
@@ -162,6 +163,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
           <Input
             value={v ?? ""}
             type="tel"
+            data-field-id={field.key}
             onChange={(e) => setVal(field.key, e.currentTarget.value)}
           />
         );
@@ -171,13 +173,14 @@ export function FormRenderer({ stageKey, sections }: Props) {
           <Input
             value={v ?? ""}
             type={field.type}
+            data-field-id={field.key}
             onChange={(e) => setVal(field.key, e.currentTarget.value)}
           />
         );
       case "textarea":
         return (
           <>
-            <Textarea value={v ?? ""} onChange={(e) => setVal(field.key, e.currentTarget.value)} />
+            <Textarea value={v ?? ""} data-field-id={field.key} onChange={(e) => setVal(field.key, e.currentTarget.value)} />
             {shouldShowVoice(stageKey, field.key, field.type) && (
               <VoiceInputButton onResult={(t) => setVal(field.key, t)} />
             )}
@@ -188,7 +191,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
         const options: string[] = (field.options || []).filter((opt: any) => opt !== "" && opt != null);
         return (
           <Select value={value} onValueChange={(val) => setVal(field.key, val)}>
-            <SelectTrigger>
+            <SelectTrigger data-field-id={field.key}>
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent className="z-50 bg-popover">
@@ -309,6 +312,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
                     <Input
                       placeholder="Notes"
                       value={notes}
+                      data-field-id={`${field.key}.${it.notes_key}`}
                       onChange={(e) =>
                         setVal(field.key, { ...groupVal, [it.notes_key]: e.currentTarget.value })
                       }
@@ -324,6 +328,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
             <Label>{it.label}</Label>
             <Input
               value={val}
+              data-field-id={`${field.key}.${it.key}`}
               onChange={(e) => setVal(field.key, { ...groupVal, [it.key]: e.currentTarget.value })}
             />
             {shouldShowVoice(stageKey, `${field.key}.${it.key}`, it.type) && (
@@ -339,6 +344,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
                     <Label>{it.label}</Label>
                     <Textarea
                       value={val}
+                      data-field-id={`${field.key}.${it.key}`}
                       onChange={(e) => setVal(field.key, { ...groupVal, [it.key]: e.currentTarget.value })}
                     />
                     {shouldShowVoice(stageKey, `${field.key}.${it.key}`, it.type) && (
@@ -420,6 +426,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
                       <div className="grid gap-1">
                         <Textarea
                           value={row.notes || ""}
+                          data-field-id={`${field.key}.${idx}.notes`}
                           onChange={(e) => {
                             const next = rows.slice();
                             next[idx] = { ...row, notes: e.currentTarget.value };
@@ -465,7 +472,11 @@ export function FormRenderer({ stageKey, sections }: Props) {
                   </div>
                   <div className="mt-2">
                     <Label>Notes</Label>
-                    <Textarea value={entry.notes || ""} onChange={(e) => setEntry({ notes: e.currentTarget.value })} />
+                    <Textarea 
+                      value={entry.notes || ""} 
+                      data-field-id={`${field.key}.${idx}.notes`}
+                      onChange={(e) => setEntry({ notes: e.currentTarget.value })} 
+                    />
                     {shouldShowVoice(stageKey, `${field.key}.${idx}.notes`, "textarea") && (
                       <VoiceInputButton onResult={(t) => setEntry({ notes: t })} />
                     )}

@@ -50,11 +50,34 @@ export default function Stage3() {
   const validateRequired = useCaseStore((s) => s.validateRequired);
 
   const handleNavigateToField = (stage: string, fieldId: string) => {
-    // Focus on the specific field
-    const fieldElement = document.querySelector(`[name="${stage}.${fieldId}"]`) as HTMLElement;
+    // Try multiple selectors to find the field
+    const selectors = [
+      `input[data-field-id="${fieldId}"]`,
+      `textarea[data-field-id="${fieldId}"]`,
+      `select[data-field-id="${fieldId}"]`,
+      `input[id*="${fieldId}"]`,
+      `textarea[id*="${fieldId}"]`,
+      `select[id*="${fieldId}"]`,
+      `[role="textbox"][id*="${fieldId}"]`, // For Select components
+    ];
+    
+    let fieldElement: HTMLElement | null = null;
+    
+    for (const selector of selectors) {
+      fieldElement = document.querySelector(selector) as HTMLElement;
+      if (fieldElement) break;
+    }
+    
     if (fieldElement) {
       fieldElement.focus();
       fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Add visual highlight
+      fieldElement.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5)';
+      setTimeout(() => {
+        fieldElement!.style.boxShadow = '';
+      }, 2000);
+    } else {
+      console.warn(`Field ${fieldId} not found for navigation`);
     }
   };
 
