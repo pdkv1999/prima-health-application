@@ -389,7 +389,7 @@ export function FormRenderer({ stageKey, sections }: Props) {
         const rows = Array.isArray(v) ? v : (field.rows || []).map((r: any) => ({ ...r, yes: false, no: false, notes: "" }));
         return (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm" data-field-id={field.key}>
               <thead>
                 <tr className="text-left">
                   <th className="p-2">Task</th>

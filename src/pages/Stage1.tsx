@@ -52,42 +52,81 @@ export default function Stage1() {
   const handleNavigateToField = (stage: string, fieldId: string) => {
     console.log('Navigating to field:', { stage, fieldId });
     
-    // Try multiple selectors to find the field
-    const selectors = [
+    // First try to find it as a form field
+    const fieldSelectors = [
       `input[data-field-id="${fieldId}"]`,
       `textarea[data-field-id="${fieldId}"]`,
       `select[data-field-id="${fieldId}"]`,
-      `input[id*="${fieldId}"]`,
-      `textarea[id*="${fieldId}"]`,
-      `select[id*="${fieldId}"]`,
-      `[role="textbox"][id*="${fieldId}"]`, // For Select components
+      `table[data-field-id="${fieldId}"]`, // For table fields like MSE
+      `div[data-field-id="${fieldId}"]`,   // For other complex fields
     ];
-    
-    console.log('Trying selectors:', selectors);
     
     let fieldElement: HTMLElement | null = null;
     
-    for (const selector of selectors) {
+    // Try to find the field element
+    for (const selector of fieldSelectors) {
       fieldElement = document.querySelector(selector) as HTMLElement;
-      console.log(`Selector "${selector}":`, fieldElement ? 'FOUND' : 'NOT FOUND');
+      console.log(`Field selector "${selector}":`, fieldElement ? 'FOUND' : 'NOT FOUND');
       if (fieldElement) break;
     }
     
-    // Also log all available data-field-id attributes for debugging
-    const allFields = Array.from(document.querySelectorAll('[data-field-id]'));
-    console.log('Available data-field-id attributes:', allFields.map(el => el.getAttribute('data-field-id')));
+    // If not found as a field, try to find it as a section heading
+    if (!fieldElement) {
+      console.log('Field not found, looking for section headings...');
+      
+      // Look for section headings that contain the field name or related terms
+      const headingSelectors = [
+        `h2:contains("${fieldId}")`,
+        `h3:contains("${fieldId}")`,
+        `h4:contains("${fieldId}")`,
+      ];
+      
+      // Since CSS doesn't support :contains(), we'll search text content manually
+      const allHeadings = document.querySelectorAll('h2, h3, h4, h5, h6, .section-title, [class*="title"]');
+      console.log('Searching through headings:', allHeadings.length);
+      
+      for (const heading of allHeadings) {
+        const text = heading.textContent?.toLowerCase() || '';
+        console.log('Checking heading:', text);
+        
+        // Check for exact matches and related terms
+        if (text.includes(fieldId.toLowerCase()) || 
+            (fieldId === 'mse' && text.includes('mental state')) ||
+            (fieldId === 'mse' && text.includes('examination'))) {
+          console.log('Found matching section heading:', text);
+          fieldElement = heading as HTMLElement;
+          break;
+        }
+      }
+    }
+    
+    // Also try partial matches in data-field-id
+    if (!fieldElement) {
+      console.log('Still not found, trying partial matches...');
+      const partialMatch = document.querySelector(`[data-field-id*="${fieldId}"]`) as HTMLElement;
+      if (partialMatch) {
+        console.log('Found partial match:', partialMatch.getAttribute('data-field-id'));
+        fieldElement = partialMatch;
+      }
+    }
     
     if (fieldElement) {
-      console.log('Found field element, focusing and scrolling');
+      console.log('Found element, focusing and scrolling');
       fieldElement.focus();
       fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       // Add visual highlight
       fieldElement.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5)';
+      fieldElement.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
       setTimeout(() => {
         fieldElement!.style.boxShadow = '';
-      }, 2000);
+        fieldElement!.style.backgroundColor = '';
+      }, 3000);
     } else {
-      console.warn(`Field ${fieldId} not found for navigation`);
+      console.warn(`Field or section "${fieldId}" not found for navigation`);
+      // Log available options for debugging
+      const allFieldIds = Array.from(document.querySelectorAll('[data-field-id]'))
+        .map(el => el.getAttribute('data-field-id'));
+      console.log('Available field IDs:', allFieldIds);
     }
   };
 
