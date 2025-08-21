@@ -50,6 +50,8 @@ export default function Stage1() {
   const validateRequired = useCaseStore((s) => s.validateRequired);
 
   const handleNavigateToField = (stage: string, fieldId: string) => {
+    console.log('Navigating to field:', { stage, fieldId });
+    
     // Try multiple selectors to find the field
     const selectors = [
       `input[data-field-id="${fieldId}"]`,
@@ -61,14 +63,22 @@ export default function Stage1() {
       `[role="textbox"][id*="${fieldId}"]`, // For Select components
     ];
     
+    console.log('Trying selectors:', selectors);
+    
     let fieldElement: HTMLElement | null = null;
     
     for (const selector of selectors) {
       fieldElement = document.querySelector(selector) as HTMLElement;
+      console.log(`Selector "${selector}":`, fieldElement ? 'FOUND' : 'NOT FOUND');
       if (fieldElement) break;
     }
     
+    // Also log all available data-field-id attributes for debugging
+    const allFields = Array.from(document.querySelectorAll('[data-field-id]'));
+    console.log('Available data-field-id attributes:', allFields.map(el => el.getAttribute('data-field-id')));
+    
     if (fieldElement) {
+      console.log('Found field element, focusing and scrolling');
       fieldElement.focus();
       fieldElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
       // Add visual highlight

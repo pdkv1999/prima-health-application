@@ -200,7 +200,10 @@ export default function ExtractionReport({ extractionResults, currentStage, onNa
                             variant="outline"
                             size="sm"
                             className="h-6 px-2 text-xs text-yellow-600 border-yellow-300 hover:bg-yellow-50"
-                            onClick={() => onNavigateToField?.(stage, fieldId)}
+                            onClick={() => {
+                              console.log('Missing field button clicked:', { stage, fieldId });
+                              onNavigateToField?.(stage, fieldId);
+                            }}
                           >
                             {fieldId} ⚠
                           </Button>
