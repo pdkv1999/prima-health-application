@@ -18,9 +18,83 @@ interface StageTranscriptionPanelProps {
 const sampleTranscripts = {
   stage1: `Ref: 12345\nGP Name: Smith\nGP Address: 1 Health Street, Dublin\nClient Name: Alex Johnson\nClient Address: 22 Oak Road, Dublin\nDOB: 2013-05-02\nGuardian: Jane Johnson\nContact Number: +353 87 123 4567\nAssessment Date: 2025-09-01\nAssessment Time: 10:00\nAssessment Location: Video call\nCare Manager: A. Psychologist\nPresent: mother and father (both)\nHandedness: right\nYear in School: 6th Class\nSchool: St. Patrick's Primary\nReferral Background: Teacher raised concerns about attention.\nMedical History: Asthma, no hospitalisations.\nMedications / Supplements: Salbutamol PRN.\nPast Surgical/Procedural History: None.\nDrug Allergies/Intolerances: NKDA.\nForensic History: None.\nSubstance History: None.\nHousehold Composition: Lives with both parents and sister.\nOther Family Details: Supportive home environment.\nFamily Medical History: Mother – hypothyroidism.\nFamily Mental Health Difficulties: Maternal aunt – depression.\nFamily Learning Difficulties: Cousin – dyslexia.\nAntenatal Details: Unremarkable.\nDelivery Details: Vaginal delivery, term.\nPostpartum Details: No complications.\nDevelopmental Milestones: Slightly delayed speech.\nAdditional Notes: Sleep onset issues.\nOT: yes\nOT Details: Sensory profile if indicated.\nSLT: no\nCognitive: yes\nCognitive Details: Consider WISC.\nOther Assessment: no\nNext Session Type: In-person S2\nOther Details: None.`,
   
-  stage2: `MSE Appearance: Well-groomed, appropriate dress\nBehavior: Fidgety, difficulty remaining seated\nSpeech: Normal rate and volume\nMood: Slightly anxious\nAffect: Congruent with mood\nThought Process: Linear, goal-directed\nThought Content: No delusions or obsessions\nPerception: No hallucinations reported\nCognition: Alert, oriented x3\nInsight: Limited awareness of attention difficulties\nJudgment: Age-appropriate\nADHD Symptoms: Inattention present in multiple settings\nImpulsivity: Frequent interrupting, difficulty waiting turn\nHyperactivity: Restless, leaves seat frequently\nFunctional Impairment: Academic performance declining\nOnset: Symptoms noted since age 6\nDuration: Persistent for 18 months`,
+  stage2: `MSE Appearance: Well-groomed, appropriate dress for age
+Behavior: Fidgety throughout, difficulty remaining seated, frequently gets up
+Speech: Normal rate and volume, occasionally interrupts
+Mood: Slightly anxious about assessment
+Affect: Congruent with stated mood
+Thought Process: Linear and goal-directed
+Thought Content: No delusions, obsessions, or concerning thoughts
+Perception: No hallucinations reported or observed
+Cognition: Alert, oriented to person, place, and time
+Insight: Limited insight into attention difficulties
+Judgment: Age-appropriate
+
+ADHD Inattention Symptoms:
+- Often fails to give close attention to details: Yes, frequently
+- Has difficulty sustaining attention: Yes, constantly
+- Does not seem to listen when spoken to: Yes, often
+- Does not follow through on instructions: Yes, struggles at school
+- Has difficulty organizing tasks and activities: Yes, very disorganized
+- Avoids tasks requiring sustained mental effort: Yes, homework battles
+- Often loses things: Yes, constantly losing homework, pencils
+- Is easily distracted by extraneous stimuli: Yes, very distractible
+- Is often forgetful in daily activities: Yes, forgets chores, belongings
+
+ADHD Hyperactivity-Impulsivity Symptoms:
+- Often fidgets with hands or squirms in seat: Yes, constant fidgeting
+- Often leaves seat when remaining seated is expected: Yes, frequently
+- Often runs about or climbs when inappropriate: Sometimes, less than before
+- Has difficulty playing quietly: Yes, always loud during play
+- Is often "on the go": Yes, described as driven by motor
+- Often talks excessively: Yes, very talkative
+- Often blurts out answers before questions completed: Yes, frequently
+- Has difficulty waiting their turn: Yes, very impatient
+- Often interrupts or intrudes on others: Yes, constantly interrupting
+
+Other Difficulties: Sleep onset problems, some social difficulties with peers due to impulsive behavior
+
+Comorbidities: Possible anxiety symptoms, especially around academic performance
+
+Preliminary Summary: ADHD Combined Presentation (DSM-5)
+
+Next Steps: Cognitive assessment recommended, consider OT for sensory profile
+Next Session Type: Final consultation with feedback
+Care Manager Reminders: Review Conners results, discuss medication options`,
   
-  stage3: `Diagnosis: ADHD Combined Presentation (314.01)\nSeverity: Moderate\nCriteria Met: 6/9 inattention, 6/9 hyperactivity-impulsivity\nDifferential: Rule out anxiety disorder\nComorbidities: None identified\nTreatment Plan: Behavioral interventions, school accommodations\nMedication: Consider stimulant trial if behavioral interventions insufficient\nFollow-up: 4-6 weeks\nRecommendations: IEP assessment, parent training\nPrognosis: Good with appropriate interventions\nRisk Factors: Family history of ADHD\nProtective Factors: Supportive family, average intelligence`
+  stage3: `MSE Serial Recitation Tasks:
+Months of the Year Backwards: No - struggled significantly, got confused after July
+Serial Threes: No - could only manage first 3 subtractions (100, 97, 94)
+Digit Span Forward: Yes - managed 5 digits forward appropriately for age
+Digit Span Reverse: No - struggled with 3 digits reverse, attention wandered
+Verbal "A" Test: No - missed several A words, attention drifted
+
+Mental State Details: Sustained attention tasks particularly challenging, consistent with ADHD presentation
+
+Diagnosis: ADHD Combined Presentation (DSM-5)
+
+DSM-5 Criteria:
+Criterion A: >6/9 symptoms in inattention and/or hyperactivity/impulsivity - Yes, meets 8/9 inattention and 7/9 hyperactivity/impulsivity
+Criterion B: Symptoms were present before age 7/12 - Yes, symptoms noted from age 6
+Criterion C: Criteria are met in two or more settings - Yes, present at home and school
+Criterion D: Symptoms are causing impairment in social, academic, and home life - Yes, significant impairment in all areas
+Criterion E: Co-occurring difficulties considered - Yes, anxiety ruled out as primary cause
+
+Criteria Details: All DSM-5 criteria clearly met with significant functional impairment
+
+Diagnosis Plan: Diagnosis of ADHD (15.09.2025)
+
+Psychoeducation: Psycho-education on diagnosis & implications, Pharmacological vs non-pharmacological interventions, Parents Plus via ADHD Ireland, Need for routine/structure
+
+Medical Investigations: Request blood investigations: FBC, B12, Ferritin, Folate, Renal, LFTs, TFTs, repeat Coeliac Serology
+
+Review Time: 6 weeks
+Medication Trial: Consider methylphenidate trial if behavioral interventions insufficient
+Aftercare Checks: Trial of ADHD medication treatment, Omega-3 Fish Oils recommendation, Iron Supplementation (Ferritin > 50ng/dL)
+
+Allied Health Assessments: Cognitive & Educational assessment, OT input for motor coordination
+
+Allied Details: Recommend comprehensive psychoeducational assessment and occupational therapy for sensory processing and motor coordination difficulties`
 };
 
 export default function StageTranscriptionPanel({ stage, stageTitle }: StageTranscriptionPanelProps) {
